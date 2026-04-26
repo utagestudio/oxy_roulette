@@ -107,7 +107,6 @@ body {
 }
 
 button,
-select,
 textarea {
   font: inherit;
 }
@@ -162,6 +161,22 @@ textarea {
   grid-template-columns: 1fr auto auto;
   gap: 8px;
   align-items: center;
+}
+
+.status-buttons {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.status-button {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-color: #555;
+}
+
+.status-button.active {
+  border-color: #00d4ff;
+  background: #00d4ff33;
 }
 
 .item-text {

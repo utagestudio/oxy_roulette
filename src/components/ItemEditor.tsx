@@ -53,16 +53,18 @@ export const ItemEditor = ({ items, onAdd, onStatusChange, onRemove }: ItemEdito
         {items.map((item) => (
           <div className="item-row" key={item.id}>
             <span className="item-text" title={item.text}>{item.text}</span>
-            <select
-              value={item.status}
-              onChange={(event) => onStatusChange(item.id, event.target.value as Status)}
-            >
-              {Object.keys(STATUS_LABEL).map((status) => (
-                <option key={status} value={status}>
-                  {STATUS_LABEL[status as Status]}
-                </option>
+            <div className="status-buttons" role="group" aria-label="状態切り替え">
+              {(Object.keys(STATUS_LABEL) as Status[]).map((status) => (
+                <button
+                  key={status}
+                  type="button"
+                  className={`status-button ${item.status === status ? 'active' : ''}`}
+                  onClick={() => onStatusChange(item.id, status)}
+                >
+                  {STATUS_LABEL[status]}
+                </button>
               ))}
-            </select>
+            </div>
             <button type="button" onClick={() => onRemove(item.id)}>削除</button>
           </div>
         ))}
