@@ -105,13 +105,31 @@ body {
 
 .roulette-cell.active {
   border-color: #00d4ff;
-  box-shadow: 0 0 0 2px #00d4ff44;
+  background: linear-gradient(135deg, #0f4a5a 0%, #1aa5c7 100%);
+  color: #ffffff;
+  box-shadow:
+    0 0 0 2px #00d4ff55,
+    0 0 18px #00d4ff66;
+  animation: roulette-active-pulse 0.55s ease-in-out infinite alternate;
 }
 
 .roulette-cell.won {
   background: #3f7d2a;
   border-color: #88d862;
   color: #fff;
+  box-shadow: 0 0 0 2px #88d86255, 0 0 16px #88d86266;
+}
+
+@keyframes roulette-active-pulse {
+  from {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  to {
+    transform: scale(1.03);
+    filter: brightness(1.15);
+  }
 }
 
 .controls .button-row {
