@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controls } from './components/Controls';
 import { ItemEditor } from './components/ItemEditor';
 import { RouletteGrid } from './components/RouletteGrid';
@@ -24,6 +24,14 @@ const App = () => {
 
   const targetItems = items.filter((item) => item.status === 'target');
 
+  const resultText = useMemo(() => {
+    if (!resultId) {
+      return null;
+    }
+
+    return items.find((item) => item.id === resultId)?.text ?? null;
+  }, [items, resultId]);
+
   const canStart = !isRolling && targetItems.length > 0;
 
   return (
@@ -45,6 +53,12 @@ const App = () => {
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
           <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
+          {resultText && (
+            <section className="panel result-display" aria-live="polite">
+              <h2>抽選結果</h2>
+              <p>{resultText}</p>
+            </section>
+          )}
           <Controls
             canStart={canStart}
             canAccept={canAccept}
