@@ -1,0 +1,173 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { Item, Status } from '../types/roulette';
+import { loadStorage, saveStorage } from '../utils/storage';
+import {
+  createRouletteIntervals,
+  getRandomInt,
+  MAX_DURATION_MS,
+  MIN_DURATION_MS,
+  pickWinner,
+} from '../utils/random';
+
+interface UseRouletteResult {
+  items: Item[];
+  focusedId: string | null;
+  resultId: string | null;
+  isRolling: boolean;
+  canAccept: boolean;
+  message: string | null;
+  addItemsFromText: (rawText: string) => { added: number; duplicates: string[] };
+  updateStatus: (id: string, status: Status) => void;
+  removeItem: (id: string) => void;
+  start: () => void;
+  accept: () => void;
+}
+
+const createId = (): string => {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+export const useRoulette = (): UseRouletteResult => {
+  const initial = useMemo(() => loadStorage(), []);
+  const [items, setItems] = useState<Item[]>(initial.items);
+  const [focusedId, setFocusedId] = useState<string | null>(null);
+  const [resultId, setResultId] = useState<string | null>(initial.lastResultId);
+  const [isRolling, setIsRolling] = useState(false);
+
+  const timerRef = useRef<number | null>(null);
+  const targetIdsRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    saveStorage({ items, lastResultId: resultId });
+  }, [items, resultId]);
+
+  useEffect(() => () => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+    }
+  }, []);
+
+  const targetItems = useMemo(() => items.filter((item) => item.status === 'target'), [items]);
+
+  const canAccept = !isRolling && resultId !== null;
+
+  const message = useMemo(() => {
+    if (targetItems.length === 0) {
+      return '対象項目がありません。項目を target にしてください。';
+    }
+
+    if (canAccept) {
+      return '結果を確定する場合は Accept を押してください。';
+    }
+
+    return null;
+  }, [canAccept, targetItems.length]);
+
+  const addItemsFromText = (rawText: string): { added: number; duplicates: string[] } => {
+    const lines = rawText
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+
+    if (lines.length === 0) {
+      return { added: 0, duplicates: [] };
+    }
+
+    const existingTextSet = new Set(items.map((item) => item.text));
+    const seen = new Set<string>();
+    const duplicates: string[] = [];
+    const newItems: Item[] = [];
+
+    lines.forEach((text) => {
+      if (existingTextSet.has(text) || seen.has(text)) {
+        duplicates.push(text);
+        return;
+      }
+      seen.add(text);
+      newItems.push({ id: createId(), text, status: 'target' });
+    });
+
+    if (newItems.length > 0) {
+      setItems((prev) => [...prev, ...newItems]);
+    }
+
+    return { added: newItems.length, duplicates };
+  };
+
+  const updateStatus = (id: string, status: Status): void => {
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status } : item)));
+  };
+
+  const removeItem = (id: string): void => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+    if (resultId === id) {
+      setResultId(null);
+      setFocusedId(null);
+    }
+  };
+
+  const start = (): void => {
+    if (isRolling || targetItems.length === 0) {
+      return;
+    }
+
+    const winner = pickWinner(targetItems);
+    const duration = getRandomInt(MIN_DURATION_MS, MAX_DURATION_MS);
+    const intervals = createRouletteIntervals(duration);
+    targetIdsRef.current = targetItems.map((item) => item.id);
+
+    setIsRolling(true);
+    setResultId(null);
+
+    let index = 0;
+    const run = () => {
+      const ids = targetIdsRef.current;
+      const lastStep = index >= intervals.length - 1;
+
+      if (lastStep) {
+        setFocusedId(winner.id);
+        setResultId(winner.id);
+        setIsRolling(false);
+        timerRef.current = null;
+        return;
+      }
+
+      const randomId = ids[getRandomInt(0, ids.length - 1)];
+      setFocusedId(randomId);
+
+      const wait = intervals[index];
+      index += 1;
+      timerRef.current = window.setTimeout(run, wait);
+    };
+
+    run();
+  };
+
+  const accept = (): void => {
+    if (!canAccept || !resultId) {
+      return;
+    }
+
+    setItems((prev) => prev.map((item) => (item.id === resultId ? { ...item, status: 'done' } : item)));
+    setFocusedId(null);
+    setResultId(null);
+  };
+
+  return {
+    items,
+    focusedId,
+    resultId,
+    isRolling,
+    canAccept,
+    message,
+    addItemsFromText,
+    updateStatus,
+    removeItem,
+    start,
+    accept,
+  };
+};
