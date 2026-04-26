@@ -302,6 +302,27 @@ button:disabled {
   background: #1c5173;
 }
 
+.item-filter-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.item-filter-button {
+  min-width: 0;
+  height: 34px;
+  padding: 0 8px;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.item-filter-button.active {
+  border-color: #78e9ff;
+  background: #00d4ff33;
+  box-shadow: 0 0 12px #00d4ff55;
+}
+
 .notice {
   margin: 0;
   color: #ffeaa2;
@@ -317,6 +338,12 @@ button:disabled {
   flex-direction: column;
   gap: 6px;
   padding-right: 4px;
+}
+
+.empty-list-message {
+  margin: 8px 0 0;
+  color: #8fa9bf;
+  font-size: 14px;
 }
 
 .item-row {

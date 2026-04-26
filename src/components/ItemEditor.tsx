@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Item, Status } from '../types/roulette';
 
+type ItemFilter = 'all' | Status;
+
 interface ItemEditorProps {
   items: Item[];
   notice: string | null;
@@ -22,11 +24,20 @@ const STATUS_ICON: Record<Status, string> = {
   done: '✅',
 };
 
+const FILTER_LABEL: Record<ItemFilter, string> = {
+  all: 'すべて',
+  target: '対象',
+  inactive: '非対象',
+  done: '抽選済み',
+};
+
 export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [editNotice, setEditNotice] = useState<string | null>(null);
   const [focusItemId, setFocusItemId] = useState<string | null>(null);
+  const [itemFilter, setItemFilter] = useState<ItemFilter>('all');
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const visibleItems = itemFilter === 'all' ? items : items.filter((item) => item.status === itemFilter);
 
   useEffect(() => {
     if (!focusItemId) {
@@ -76,9 +87,23 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
           +
         </button>
       </div>
+      <div className="item-filter-tabs" role="group" aria-label="項目表示フィルタ">
+        {(Object.keys(FILTER_LABEL) as ItemFilter[]).map((filter) => (
+          <button
+            key={filter}
+            type="button"
+            className={`item-filter-button ${itemFilter === filter ? 'active' : ''}`}
+            onClick={() => setItemFilter(filter)}
+            aria-pressed={itemFilter === filter}
+          >
+            {FILTER_LABEL[filter]}
+          </button>
+        ))}
+      </div>
       {(editNotice || notice) && <p className="notice">{editNotice ?? notice}</p>}
       <div className="item-list">
-        {items.map((item) => (
+        {visibleItems.length === 0 && <p className="empty-list-message">該当する項目はありません。</p>}
+        {visibleItems.map((item) => (
           <div className="item-row" key={item.id}>
             <input
               ref={(element) => {
