@@ -147,6 +147,7 @@ export const useRoulette = (): UseRouletteResult => {
     setResultId(null);
 
     let index = 0;
+    let previousFocusedId: string | null = null;
     const run = () => {
       const ids = targetIdsRef.current;
       const lastStep = index >= intervals.length - 1;
@@ -160,7 +161,9 @@ export const useRoulette = (): UseRouletteResult => {
         return;
       }
 
-      const randomId = ids[getRandomInt(0, ids.length - 1)];
+      const candidates = ids.length > 1 ? ids.filter((id) => id !== previousFocusedId) : ids;
+      const randomId = candidates[getRandomInt(0, candidates.length - 1)];
+      previousFocusedId = randomId;
       setFocusedId(randomId);
       playRouletteTick();
 
