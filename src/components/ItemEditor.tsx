@@ -31,6 +31,13 @@ const FILTER_LABEL: Record<ItemFilter, string> = {
   done: '抽選済み',
 };
 
+const FILTER_ICON: Record<ItemFilter, string> = {
+  all: '🔎',
+  inactive: STATUS_ICON.inactive,
+  target: STATUS_ICON.target,
+  done: STATUS_ICON.done,
+};
+
 export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [editNotice, setEditNotice] = useState<string | null>(null);
@@ -72,6 +79,21 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
     <section className="panel item-editor">
       <div className="item-editor-header">
         <h2>項目管理</h2>
+        <div className="item-filter-tabs" role="group" aria-label="項目表示フィルタ">
+          {(Object.keys(FILTER_LABEL) as ItemFilter[]).map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              className={`item-filter-button ${itemFilter === filter ? 'active' : ''}`}
+              onClick={() => setItemFilter(filter)}
+              aria-label={`${FILTER_LABEL[filter]}を表示`}
+              aria-pressed={itemFilter === filter}
+              title={FILTER_LABEL[filter]}
+            >
+              <span aria-hidden="true">{FILTER_ICON[filter]}</span>
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           className="add-item-button"
@@ -86,19 +108,6 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
         >
           +
         </button>
-      </div>
-      <div className="item-filter-tabs" role="group" aria-label="項目表示フィルタ">
-        {(Object.keys(FILTER_LABEL) as ItemFilter[]).map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            className={`item-filter-button ${itemFilter === filter ? 'active' : ''}`}
-            onClick={() => setItemFilter(filter)}
-            aria-pressed={itemFilter === filter}
-          >
-            {FILTER_LABEL[filter]}
-          </button>
-        ))}
       </div>
       {(editNotice || notice) && <p className="notice">{editNotice ?? notice}</p>}
       <div className="item-list">
