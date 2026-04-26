@@ -39,9 +39,9 @@ const playTone = (frequency: number, duration: number, volume: number): void => 
 };
 
 export const playRouletteTick = (): void => {
-  playTone(420, 0.045, 0.035);
+  playTone(420, 0.045, 0.07);
 };
 
 export const playRouletteResult = (): void => {
-  playTone(680, 0.12, 0.05);
+  playTone(680, 0.12, 0.1);
 };
