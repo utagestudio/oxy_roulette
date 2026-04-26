@@ -169,14 +169,36 @@ textarea {
 }
 
 .status-button {
-  padding: 6px 10px;
-  font-size: 12px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-color: #555;
 }
 
 .status-button.active {
   border-color: #00d4ff;
   background: #00d4ff33;
+}
+
+.remove-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #6a3b3b;
+}
+
+.remove-button:hover {
+  background: #7a2d2d;
 }
 
 .item-text {

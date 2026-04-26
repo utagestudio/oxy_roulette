@@ -14,6 +14,12 @@ const STATUS_LABEL: Record<Status, string> = {
   done: '抽選済み',
 };
 
+const STATUS_ICON: Record<Status, string> = {
+  inactive: '🚫',
+  target: '🎯',
+  done: '✅',
+};
+
 export const ItemEditor = ({ items, onAdd, onStatusChange, onRemove }: ItemEditorProps) => {
   const [input, setInput] = useState('');
   const [notice, setNotice] = useState<string | null>(null);
@@ -60,12 +66,27 @@ export const ItemEditor = ({ items, onAdd, onStatusChange, onRemove }: ItemEdito
                   type="button"
                   className={`status-button ${item.status === status ? 'active' : ''}`}
                   onClick={() => onStatusChange(item.id, status)}
+                  aria-label={`状態を${STATUS_LABEL[status]}に変更`}
+                  title={STATUS_LABEL[status]}
                 >
-                  {STATUS_LABEL[status]}
+                  <span aria-hidden="true">{STATUS_ICON[status]}</span>
                 </button>
               ))}
             </div>
-            <button type="button" onClick={() => onRemove(item.id)}>削除</button>
+            <button
+              type="button"
+              className="remove-button"
+              onClick={() => {
+                const confirmed = window.confirm(`「${item.text}」を削除しますか？`);
+                if (confirmed) {
+                  onRemove(item.id);
+                }
+              }}
+              aria-label="項目を削除"
+              title="削除"
+            >
+              <span aria-hidden="true">🗑️</span>
+            </button>
           </div>
         ))}
       </div>
