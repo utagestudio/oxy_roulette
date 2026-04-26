@@ -8,6 +8,7 @@ import {
   MIN_DURATION_MS,
   pickWinner,
 } from '../utils/random';
+import { playRouletteResult, playRouletteTick } from '../utils/sound';
 
 type ItemImportMode = 'append' | 'replace';
 
@@ -129,11 +130,13 @@ export const useRoulette = (): UseRouletteResult => {
         setResultId(winner.id);
         setIsRolling(false);
         timerRef.current = null;
+        playRouletteResult();
         return;
       }
 
       const randomId = ids[getRandomInt(0, ids.length - 1)];
       setFocusedId(randomId);
+      playRouletteTick();
 
       const wait = intervals[index];
       index += 1;
