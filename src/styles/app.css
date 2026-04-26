@@ -30,6 +30,13 @@ body {
   gap: 12px;
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .app-header h1 {
   margin: 0;
   font-size: 28px;
@@ -41,6 +48,10 @@ body {
   grid-template-columns: 2fr 1fr;
   gap: 12px;
   min-height: 0;
+}
+
+.app-layout.editor-hidden {
+  grid-template-columns: 1fr;
 }
 
 .left-column {
