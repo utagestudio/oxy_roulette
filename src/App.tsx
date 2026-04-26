@@ -15,6 +15,7 @@ const App = () => {
     isRolling,
     canAccept,
     addItemsFromText,
+    updateItemText,
     updateStatus,
     removeItem,
     start,
@@ -143,6 +144,7 @@ const App = () => {
           <ItemEditor
             items={items}
             notice={editorNotice}
+            onTextChange={updateItemText}
             onStatusChange={updateStatus}
             onRemove={removeItem}
           />

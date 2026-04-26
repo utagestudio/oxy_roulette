@@ -19,6 +19,7 @@ interface UseRouletteResult {
   isRolling: boolean;
   canAccept: boolean;
   addItemsFromText: (rawText: string, mode: ItemImportMode) => { added: number; duplicates: string[] };
+  updateItemText: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   updateStatus: (id: string, status: Status) => void;
   removeItem: (id: string) => void;
   start: () => void;
@@ -99,6 +100,21 @@ export const useRoulette = (): UseRouletteResult => {
     setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status } : item)));
   };
 
+  const updateItemText = (id: string, text: string): { updated: boolean; reason?: 'empty' | 'duplicate' } => {
+    const nextText = text.trim();
+
+    if (nextText.length === 0) {
+      return { updated: false, reason: 'empty' };
+    }
+
+    if (items.some((item) => item.id !== id && item.text === nextText)) {
+      return { updated: false, reason: 'duplicate' };
+    }
+
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, text: nextText } : item)));
+    return { updated: true };
+  };
+
   const removeItem = (id: string): void => {
     setItems((prev) => prev.filter((item) => item.id !== id));
     if (resultId === id) {
@@ -163,6 +179,7 @@ export const useRoulette = (): UseRouletteResult => {
     isRolling,
     canAccept,
     addItemsFromText,
+    updateItemText,
     updateStatus,
     removeItem,
     start,

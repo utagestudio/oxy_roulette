@@ -176,7 +176,8 @@ body {
   flex-wrap: wrap;
 }
 
-button {
+button,
+input {
   font: inherit;
 }
 
@@ -265,6 +266,26 @@ button:disabled {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.item-text-input {
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #f5f5f5;
+  background: #151515;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+.item-text-input:focus {
+  border-color: #00d4ff;
+  outline: none;
+  box-shadow: 0 0 0 2px #00d4ff33;
 }
 
 .dialog-backdrop {
