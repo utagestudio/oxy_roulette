@@ -15,7 +15,6 @@ interface UseRouletteResult {
   resultId: string | null;
   isRolling: boolean;
   canAccept: boolean;
-  message: string | null;
   addItemsFromText: (rawText: string) => { added: number; duplicates: string[] };
   updateStatus: (id: string, status: Status) => void;
   removeItem: (id: string) => void;
@@ -54,18 +53,6 @@ export const useRoulette = (): UseRouletteResult => {
   const targetItems = useMemo(() => items.filter((item) => item.status === 'target'), [items]);
 
   const canAccept = !isRolling && resultId !== null;
-
-  const message = useMemo(() => {
-    if (targetItems.length === 0) {
-      return '対象項目がありません。項目を target にしてください。';
-    }
-
-    if (canAccept) {
-      return '結果を確定する場合は Accept を押してください。';
-    }
-
-    return null;
-  }, [canAccept, targetItems.length]);
 
   const addItemsFromText = (rawText: string): { added: number; duplicates: string[] } => {
     const lines = rawText
@@ -163,7 +150,6 @@ export const useRoulette = (): UseRouletteResult => {
     resultId,
     isRolling,
     canAccept,
-    message,
     addItemsFromText,
     updateStatus,
     removeItem,

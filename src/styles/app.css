@@ -57,7 +57,7 @@ body {
 .left-column {
   min-height: 0;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 138px 116px;
+  grid-template-rows: minmax(0, 1fr) 138px;
   gap: 12px;
 }
 
@@ -72,6 +72,13 @@ body {
 .panel h2 {
   margin: 0 0 10px;
   font-size: 18px;
+}
+
+.result-controls-row {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 12px;
 }
 
 .result-display {
@@ -156,9 +163,17 @@ body {
   }
 }
 
+.controls {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
 .controls .button-row {
   display: flex;
   gap: 10px;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 button,
@@ -200,11 +215,6 @@ textarea {
   margin: 0;
   color: #f0dd87;
   font-size: 14px;
-  min-height: 18px;
-}
-
-.notice.is-empty {
-  visibility: hidden;
 }
 
 .item-list {

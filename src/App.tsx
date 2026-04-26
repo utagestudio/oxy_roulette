@@ -12,7 +12,6 @@ const App = () => {
     resultId,
     isRolling,
     canAccept,
-    message,
     addItemsFromText,
     updateStatus,
     removeItem,
@@ -53,22 +52,23 @@ const App = () => {
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
           <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
-          <section
-            className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
-            aria-live={resultText ? 'polite' : undefined}
-            aria-hidden={resultText ? undefined : true}
-          >
-            <h2>抽選結果</h2>
-            <p>{resultText ?? '\u00a0'}</p>
-          </section>
-          <Controls
-            canStart={canStart}
-            canAccept={canAccept}
-            isRolling={isRolling}
-            onStart={start}
-            onAccept={accept}
-            message={message}
-          />
+          <div className="result-controls-row">
+            <section
+              className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
+              aria-live={resultText ? 'polite' : undefined}
+              aria-hidden={resultText ? undefined : true}
+            >
+              <h2>抽選結果</h2>
+              <p>{resultText ?? '\u00a0'}</p>
+            </section>
+            <Controls
+              canStart={canStart}
+              canAccept={canAccept}
+              isRolling={isRolling}
+              onStart={start}
+              onAccept={accept}
+            />
+          </div>
         </div>
 
         {isEditorVisible && (

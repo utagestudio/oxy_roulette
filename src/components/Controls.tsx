@@ -4,7 +4,6 @@ interface ControlsProps {
   isRolling: boolean;
   onStart: () => void;
   onAccept: () => void;
-  message: string | null;
 }
 
 export const Controls = ({
@@ -13,7 +12,6 @@ export const Controls = ({
   isRolling,
   onStart,
   onAccept,
-  message,
 }: ControlsProps) => (
   <section className="panel controls">
     <h2>操作</h2>
@@ -25,6 +23,5 @@ export const Controls = ({
         Accept
       </button>
     </div>
-    <p className={`notice ${message ? '' : 'is-empty'}`.trim()}>{message ?? '\u00a0'}</p>
   </section>
 );
