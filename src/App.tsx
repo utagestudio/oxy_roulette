@@ -53,12 +53,14 @@ const App = () => {
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
           <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
-          {resultText && (
-            <section className="panel result-display" aria-live="polite">
-              <h2>抽選結果</h2>
-              <p>{resultText}</p>
-            </section>
-          )}
+          <section
+            className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
+            aria-live={resultText ? 'polite' : undefined}
+            aria-hidden={resultText ? undefined : true}
+          >
+            <h2>抽選結果</h2>
+            <p>{resultText ?? '\u00a0'}</p>
+          </section>
           <Controls
             canStart={canStart}
             canAccept={canAccept}

@@ -57,7 +57,7 @@ body {
 .left-column {
   min-height: 0;
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: minmax(0, 1fr) 138px 116px;
   gap: 12px;
 }
 
@@ -92,6 +92,10 @@ body {
   text-shadow: 0 0 12px #ffe26a66;
   word-break: break-word;
   overflow-wrap: anywhere;
+}
+
+.result-display.is-empty {
+  visibility: hidden;
 }
 
 .roulette-grid {
@@ -196,6 +200,11 @@ textarea {
   margin: 0;
   color: #f0dd87;
   font-size: 14px;
+  min-height: 18px;
+}
+
+.notice.is-empty {
+  visibility: hidden;
 }
 
 .item-list {

@@ -25,6 +25,6 @@ export const Controls = ({
         Accept
       </button>
     </div>
-    {message && <p className="notice">{message}</p>}
+    <p className={`notice ${message ? '' : 'is-empty'}`.trim()}>{message ?? '\u00a0'}</p>
   </section>
 );
