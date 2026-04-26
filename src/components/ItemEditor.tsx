@@ -32,7 +32,7 @@ const FILTER_LABEL: Record<ItemFilter, string> = {
 };
 
 const FILTER_ICON: Record<ItemFilter, string> = {
-  all: '🔎',
+  all: '📚',
   inactive: STATUS_ICON.inactive,
   target: STATUS_ICON.target,
   done: STATUS_ICON.done,
@@ -80,6 +80,9 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
       <div className="item-editor-header">
         <h2>項目管理</h2>
         <div className="item-filter-tabs" role="group" aria-label="項目表示フィルタ">
+          <span className="item-filter-label" aria-hidden="true" title="フィルタ">
+            🔎
+          </span>
           {(Object.keys(FILTER_LABEL) as ItemFilter[]).map((filter) => (
             <button
               key={filter}
