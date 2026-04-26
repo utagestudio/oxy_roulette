@@ -176,8 +176,7 @@ body {
   flex-wrap: wrap;
 }
 
-button,
-textarea {
+button {
   font: inherit;
 }
 
@@ -196,19 +195,9 @@ button:disabled {
 }
 
 .item-editor {
-  display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-}
-
-textarea {
-  width: 100%;
-  resize: none;
-  background: #151515;
-  color: #f5f5f5;
-  border: 1px solid #444;
-  border-radius: 8px;
-  padding: 8px;
 }
 
 .notice {
@@ -218,6 +207,7 @@ textarea {
 }
 
 .item-list {
+  flex: 1;
   min-height: 0;
   overflow: auto;
   display: flex;
@@ -275,4 +265,55 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  background: #00000099;
+}
+
+.paste-dialog {
+  width: min(640px, calc(100vw - 48px));
+  background: #202020;
+  border: 1px solid #4f69b8;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 20px 48px #00000088;
+}
+
+.paste-dialog h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.paste-dialog p {
+  margin: 0 0 12px;
+  color: #d8d8d8;
+}
+
+.paste-preview {
+  max-height: 220px;
+  overflow: auto;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  background: #151515;
+  color: #f5f5f5;
+}
+
+.paste-preview div {
+  overflow-wrap: anywhere;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
 }

@@ -9,13 +9,15 @@ import {
   pickWinner,
 } from '../utils/random';
 
+type ItemImportMode = 'append' | 'replace';
+
 interface UseRouletteResult {
   items: Item[];
   focusedId: string | null;
   resultId: string | null;
   isRolling: boolean;
   canAccept: boolean;
-  addItemsFromText: (rawText: string) => { added: number; duplicates: string[] };
+  addItemsFromText: (rawText: string, mode: ItemImportMode) => { added: number; duplicates: string[] };
   updateStatus: (id: string, status: Status) => void;
   removeItem: (id: string) => void;
   start: () => void;
@@ -54,7 +56,10 @@ export const useRoulette = (): UseRouletteResult => {
 
   const canAccept = !isRolling && resultId !== null;
 
-  const addItemsFromText = (rawText: string): { added: number; duplicates: string[] } => {
+  const addItemsFromText = (
+    rawText: string,
+    mode: ItemImportMode,
+  ): { added: number; duplicates: string[] } => {
     const lines = rawText
       .split(/\r?\n/)
       .map((line) => line.trim())
@@ -64,7 +69,7 @@ export const useRoulette = (): UseRouletteResult => {
       return { added: 0, duplicates: [] };
     }
 
-    const existingTextSet = new Set(items.map((item) => item.text));
+    const existingTextSet = mode === 'append' ? new Set(items.map((item) => item.text)) : new Set<string>();
     const seen = new Set<string>();
     const duplicates: string[] = [];
     const newItems: Item[] = [];
@@ -78,7 +83,11 @@ export const useRoulette = (): UseRouletteResult => {
       newItems.push({ id: createId(), text, status: 'target' });
     });
 
-    if (newItems.length > 0) {
+    if (mode === 'replace') {
+      setItems(newItems);
+      setFocusedId(null);
+      setResultId(null);
+    } else if (newItems.length > 0) {
       setItems((prev) => [...prev, ...newItems]);
     }
 
