@@ -32,10 +32,13 @@ const App = () => {
         <h1>ONI 配信用ルーレット</h1>
         <button
           type="button"
+          className="panel-toggle-button"
           onClick={() => setIsEditorVisible((prev) => !prev)}
           aria-pressed={isEditorVisible}
+          aria-label={isEditorVisible ? '項目パネルを隠す' : '項目パネルを表示'}
+          title={isEditorVisible ? '項目パネルを隠す' : '項目パネルを表示'}
         >
-          {isEditorVisible ? '項目パネルを隠す' : '項目パネルを表示'}
+          {isEditorVisible ? '🙈' : '👁️'}
         </button>
       </header>
 
