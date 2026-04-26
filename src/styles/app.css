@@ -75,14 +75,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   background: #242424;
   color: #ddd;
   padding: 6px;
   font-size: 22px;
   font-weight: 700;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .roulette-cell.empty {
