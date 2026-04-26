@@ -14,6 +14,7 @@ const App = () => {
     resultId,
     isRolling,
     canAccept,
+    addEmptyItem,
     addItemsFromText,
     updateItemText,
     updateStatus,
@@ -26,7 +27,7 @@ const App = () => {
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [editorNotice, setEditorNotice] = useState<string | null>(null);
 
-  const targetItems = items.filter((item) => item.status === 'target');
+  const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
   const pastedItems = useMemo(() => {
     if (!pasteText) {
       return [];
@@ -144,6 +145,7 @@ const App = () => {
           <ItemEditor
             items={items}
             notice={editorNotice}
+            onAddEmpty={addEmptyItem}
             onTextChange={updateItemText}
             onStatusChange={updateStatus}
             onRemove={removeItem}

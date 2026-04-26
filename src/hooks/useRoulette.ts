@@ -18,6 +18,7 @@ interface UseRouletteResult {
   resultId: string | null;
   isRolling: boolean;
   canAccept: boolean;
+  addEmptyItem: () => string;
   addItemsFromText: (rawText: string, mode: ItemImportMode) => { added: number; duplicates: string[] };
   updateItemText: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   updateStatus: (id: string, status: Status) => void;
@@ -54,7 +55,10 @@ export const useRoulette = (): UseRouletteResult => {
     }
   }, []);
 
-  const targetItems = useMemo(() => items.filter((item) => item.status === 'target'), [items]);
+  const targetItems = useMemo(
+    () => items.filter((item) => item.status === 'target' && item.text.trim().length > 0),
+    [items],
+  );
 
   const canAccept = !isRolling && resultId !== null;
 
@@ -94,6 +98,12 @@ export const useRoulette = (): UseRouletteResult => {
     }
 
     return { added: newItems.length, duplicates };
+  };
+
+  const addEmptyItem = (): string => {
+    const id = createId();
+    setItems((prev) => [{ id, text: '', status: 'target' }, ...prev]);
+    return id;
   };
 
   const updateStatus = (id: string, status: Status): void => {
@@ -178,6 +188,7 @@ export const useRoulette = (): UseRouletteResult => {
     resultId,
     isRolling,
     canAccept,
+    addEmptyItem,
     addItemsFromText,
     updateItemText,
     updateStatus,

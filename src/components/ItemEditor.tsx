@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Item, Status } from '../types/roulette';
 
 interface ItemEditorProps {
   items: Item[];
   notice: string | null;
+  onAddEmpty: () => string;
   onTextChange: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   onStatusChange: (id: string, status: Status) => void;
   onRemove: (id: string) => void;
@@ -21,9 +22,26 @@ const STATUS_ICON: Record<Status, string> = {
   done: '✅',
 };
 
-export const ItemEditor = ({ items, notice, onTextChange, onStatusChange, onRemove }: ItemEditorProps) => {
+export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [editNotice, setEditNotice] = useState<string | null>(null);
+  const [focusItemId, setFocusItemId] = useState<string | null>(null);
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  useEffect(() => {
+    if (!focusItemId) {
+      return;
+    }
+
+    const input = inputRefs.current[focusItemId];
+    if (!input) {
+      return;
+    }
+
+    input.focus();
+    input.select();
+    setFocusItemId(null);
+  }, [focusItemId, items]);
 
   const commitText = (item: Item): void => {
     const draft = drafts[item.id] ?? item.text;
@@ -41,12 +59,31 @@ export const ItemEditor = ({ items, notice, onTextChange, onStatusChange, onRemo
 
   return (
     <section className="panel item-editor">
-      <h2>項目管理</h2>
+      <div className="item-editor-header">
+        <h2>項目管理</h2>
+        <button
+          type="button"
+          className="add-item-button"
+          onClick={() => {
+            const id = onAddEmpty();
+            setDrafts((prev) => ({ ...prev, [id]: '' }));
+            setFocusItemId(id);
+            setEditNotice(null);
+          }}
+          aria-label="空の項目を追加"
+          title="空の項目を追加"
+        >
+          +
+        </button>
+      </div>
       {(editNotice || notice) && <p className="notice">{editNotice ?? notice}</p>}
       <div className="item-list">
         {items.map((item) => (
           <div className="item-row" key={item.id}>
             <input
+              ref={(element) => {
+                inputRefs.current[item.id] = element;
+              }}
               className="item-text-input"
               type="text"
               value={drafts[item.id] ?? item.text}

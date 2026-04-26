@@ -201,6 +201,33 @@ button:disabled {
   gap: 8px;
 }
 
+.item-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.item-editor-header h2 {
+  margin: 0;
+}
+
+.add-item-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  font-size: 22px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #4f69b8;
+}
+
+.add-item-button:hover {
+  background: #2f3f73;
+}
+
 .notice {
   margin: 0;
   color: #f0dd87;
