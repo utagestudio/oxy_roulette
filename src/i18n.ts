@@ -12,7 +12,8 @@ export const translations = {
     helpTitle: '使い方',
     helpIntro: 'Stellar Picker は、配信や作業の「次にやること」をリストから抽選するツールです。',
     helpSteps: [
-      'メモ帳などにやることリストを 1 行 1 項目で書き出し、Ctrl+C でコピーして、このアプリがアクティブな状態で Ctrl+V で貼り付けます。',
+      'メモ帳などにやることリストを 1 行 1 項目で書き出します。',
+      '書き出したリストを Ctrl+C でコピーして、このアプリがアクティブな状態で Ctrl+V で貼り付けます。',
       '確認ダイアログで「追記」または「新規」を選び、項目を追加します。',
       '項目管理で、抽選したい項目を「対象」にします。',
       '「スタート」で抽選し、結果を採用する場合は「確定」を押します。',
@@ -69,7 +70,8 @@ export const translations = {
     helpTitle: 'How to use',
     helpIntro: 'Stellar Picker draws the next task or prompt from a customizable list for streams and work sessions.',
     helpSteps: [
-      'Write your task list in a notepad or similar app with one item per line, copy it with Ctrl+C, then paste it with Ctrl+V while this app is active.',
+      'Write your task list in a notepad or similar app with one item per line.',
+      'Copy that list with Ctrl+C, then paste it with Ctrl+V while this app is active.',
       'Choose Append or Replace in the confirmation dialog to add the items.',
       'Use the item panel to mark drawable items as Target.',
       'Press Start to draw, then press Confirm if you want to keep the result.',
