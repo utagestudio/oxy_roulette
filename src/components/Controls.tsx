@@ -18,7 +18,6 @@ export const Controls = ({
   t,
 }: ControlsProps) => (
   <section className="panel controls">
-    <h2>{t.controls}</h2>
     <div className="button-row">
       <button type="button" className="control-button" onClick={onStart} disabled={!canStart}>
         <span aria-hidden="true">🚀</span>
