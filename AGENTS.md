@@ -31,6 +31,10 @@ Stellar Picker の作成
   - 初期表示は日本語
   - ヘッダーで `JA` / `EN` を切り替えられる
   - 選択した言語は `localStorage` に保存し、次回起動時に復元する
+- ヘッダーから使い方モーダルを開けるようにする
+  - モーダルには貼り付け追加、対象設定、抽選、確定の基本手順を表示する
+  - モーダルには `+` 追加、状態切り替え、抽選済みフィルタのヒントを表示する
+  - 表示内容は日本語/英語の切り替えに対応する
 - 一般公開向けに、`index.html` の `head` には title / description / OGP / Twitter Card / theme color / favicon などの基本メタ情報を設定する
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する
   - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する

@@ -29,6 +29,7 @@ const App = () => {
     const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
     return isLocale(storedLocale) ? storedLocale : 'ja';
   });
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [editorNotice, setEditorNotice] = useState<string | null>(null);
   const t = translations[locale];
@@ -63,7 +64,7 @@ const App = () => {
 
   useEffect(() => {
     const handlePaste = (event: ClipboardEvent) => {
-      if (isRolling) {
+      if (isRolling || isHelpOpen) {
         return;
       }
 
@@ -93,7 +94,22 @@ const App = () => {
 
     window.addEventListener('paste', handlePaste);
     return () => window.removeEventListener('paste', handlePaste);
-  }, [isRolling]);
+  }, [isHelpOpen, isRolling]);
+
+  useEffect(() => {
+    if (!isHelpOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsHelpOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isHelpOpen]);
 
   const handlePasteImport = (mode: PasteImportMode) => {
     if (!pasteText) {
@@ -120,6 +136,15 @@ const App = () => {
       <header className="app-header">
         <h1>{t.appTitle}</h1>
         <div className="header-actions">
+          <button
+            type="button"
+            className="help-button"
+            onClick={() => setIsHelpOpen(true)}
+            aria-label={t.openHelp}
+            title={t.openHelp}
+          >
+            ?
+          </button>
           <div className="language-switch" role="group" aria-label="Language">
             {(['ja', 'en'] as Locale[]).map((nextLocale) => (
               <button
@@ -181,6 +206,43 @@ const App = () => {
           />
         )}
       </div>
+
+      {isHelpOpen && (
+        <div className="dialog-backdrop" role="presentation" onClick={() => setIsHelpOpen(false)}>
+          <section
+            className="help-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="help-dialog-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="help-dialog-header">
+              <h2 id="help-dialog-title">{t.helpTitle}</h2>
+              <button
+                type="button"
+                className="dialog-close-button"
+                onClick={() => setIsHelpOpen(false)}
+                aria-label={t.closeHelp}
+                title={t.closeHelp}
+              >
+                ×
+              </button>
+            </div>
+            <p className="help-intro">{t.helpIntro}</p>
+            <ol className="help-list">
+              {t.helpSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            <h3>{t.helpTipsTitle}</h3>
+            <ul className="help-list">
+              {t.helpTips.map((tip) => (
+                <li key={tip}>{tip}</li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      )}
 
       {pasteText && (
         <div className="dialog-backdrop" role="presentation">

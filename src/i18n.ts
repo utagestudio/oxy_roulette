@@ -7,6 +7,22 @@ export const isLocale = (value: string | null): value is Locale => value === 'ja
 export const translations = {
   ja: {
     appTitle: 'ステラピッカー',
+    openHelp: '使い方を表示',
+    closeHelp: '使い方を閉じる',
+    helpTitle: '使い方',
+    helpIntro: 'Stellar Picker は、配信や作業の「次にやること」をリストから抽選するツールです。',
+    helpSteps: [
+      '項目リストをコピーして、このアプリがアクティブな状態で貼り付けます。',
+      '確認ダイアログで「追記」または「新規」を選び、項目を追加します。',
+      '項目管理で、抽選したい項目を「対象」にします。',
+      '「スタート」で抽選し、結果を採用する場合は「確定」を押します。',
+    ],
+    helpTipsTitle: 'ヒント',
+    helpTips: [
+      '+ ボタンで空の項目を追加できます。',
+      '項目の状態は「非対象」「対象」「抽選済み」に切り替えられます。',
+      'フィルタで抽選済み一覧だけを表示できます。',
+    ],
     hideItemPanel: '項目パネルを隠す',
     showItemPanel: '項目パネルを表示',
     result: '抽選結果',
@@ -48,6 +64,22 @@ export const translations = {
   },
   en: {
     appTitle: 'Stellar Picker',
+    openHelp: 'Show help',
+    closeHelp: 'Close help',
+    helpTitle: 'How to use',
+    helpIntro: 'Stellar Picker draws the next task or prompt from a customizable list for streams and work sessions.',
+    helpSteps: [
+      'Copy your item list, then paste it while this app is active.',
+      'Choose Append or Replace in the confirmation dialog to add the items.',
+      'Use the item panel to mark drawable items as Target.',
+      'Press Start to draw, then press Confirm if you want to keep the result.',
+    ],
+    helpTipsTitle: 'Tips',
+    helpTips: [
+      'Use the + button to add an empty item.',
+      'Each item can be Inactive, Target, or Done.',
+      'Use the filter controls to view only completed items.',
+    ],
     hideItemPanel: 'Hide item panel',
     showItemPanel: 'Show item panel',
     result: 'Result',
