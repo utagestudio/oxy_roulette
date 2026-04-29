@@ -15,8 +15,8 @@ git commit 時のメッセージガイドライン
   2. **2行目**: 空行。
   3. **3行目以降**: 日本語による詳細な変更内容の説明。
       - 箇条書きや具体的な変更点を含めてください。
-  4. **フッター**: Junie を Co-author として追加。
-      - `Co-authored-by: Junie <junie@jetbrains.com>`
+  4. **フッター**: Codex を Co-author として追加。
+      - `Co-authored-by: Codex <codex@openai.com>`
 
 ## Examples
 ```text
@@ -26,5 +26,5 @@ Update: site design to light theme
 - Layout.astro: 背景色の変更
 - Hero.astro: グラデーションの調整
 
-Co-authored-by: Junie <junie@jetbrains.com>
+Co-authored-by: Codex <codex@openai.com>
 ```
