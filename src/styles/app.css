@@ -283,6 +283,12 @@ body {
   line-height: 1;
 }
 
+.control-button span:last-child {
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
 button,
 input {
   font: inherit;
