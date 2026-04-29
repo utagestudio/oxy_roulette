@@ -33,6 +33,7 @@ Stellar Picker の作成
   - 選択した言語は `localStorage` に保存し、次回起動時に復元する
 - 一般公開向けに、`index.html` の `head` には title / description / OGP / Twitter Card / theme color / favicon などの基本メタ情報を設定する
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する
+  - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する
 - デザインは、配信画面で視認しやすい宇宙感のある見た目にする
   - 星層や深い宇宙背景を使う
   - パネルは半透明の宇宙船UI風にする
