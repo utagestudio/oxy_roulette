@@ -19,7 +19,6 @@ export const RouletteGrid = ({ targetItems, focusedId, resultId }: RouletteGridP
 
   return (
     <section className="panel roulette-grid-wrap">
-      <h2>ルーレット</h2>
       <div
         className="roulette-grid"
         style={{

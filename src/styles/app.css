@@ -157,7 +157,7 @@ body {
 }
 
 .roulette-grid {
-  height: calc(100% - 30px);
+  height: 100%;
   display: grid;
   gap: 8px;
 }
