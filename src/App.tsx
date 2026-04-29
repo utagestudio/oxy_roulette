@@ -106,7 +106,7 @@ const App = () => {
   return (
     <main className="app-root">
       <header className="app-header">
-        <h1>ONI 配信用ルーレット</h1>
+        <h1>Stellar Picker</h1>
         <button
           type="button"
           className="panel-toggle-button"
