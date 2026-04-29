@@ -3,6 +3,7 @@ import { Controls } from './components/Controls';
 import { ItemEditor } from './components/ItemEditor';
 import { RouletteGrid } from './components/RouletteGrid';
 import { useRoulette } from './hooks/useRoulette';
+import { isLocale, LOCALE_STORAGE_KEY, type Locale, translations } from './i18n';
 import './styles/app.css';
 
 type PasteImportMode = 'append' | 'replace';
@@ -24,8 +25,13 @@ const App = () => {
   } = useRoulette();
 
   const [isEditorVisible, setIsEditorVisible] = useState(true);
+  const [locale, setLocale] = useState<Locale>(() => {
+    const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    return isLocale(storedLocale) ? storedLocale : 'ja';
+  });
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [editorNotice, setEditorNotice] = useState<string | null>(null);
+  const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
   const pastedItems = useMemo(() => {
@@ -48,6 +54,12 @@ const App = () => {
   }, [items, resultId]);
 
   const canStart = !isRolling && targetItems.length > 0;
+
+  useEffect(() => {
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+    document.documentElement.lang = locale;
+    document.title = t.appTitle;
+  }, [locale, t.appTitle]);
 
   useEffect(() => {
     const handlePaste = (event: ClipboardEvent) => {
@@ -89,14 +101,14 @@ const App = () => {
     }
 
     const { added, duplicates } = addItemsFromText(pasteText, mode);
-    const action = mode === 'append' ? '追記' : '新規作成';
+    const action = mode === 'append' ? t.appendAction : t.replaceAction;
 
     if (duplicates.length > 0) {
-      setEditorNotice(`${action}: ${added} 件追加。重複のため除外: ${duplicates.join(', ')}`);
+      setEditorNotice(t.importWithDuplicates(action, added, duplicates.join(', ')));
     } else if (added > 0) {
-      setEditorNotice(`${action}: ${added} 件追加しました。`);
+      setEditorNotice(t.importAdded(action, added));
     } else {
-      setEditorNotice(`${action}: 追加できる項目がありませんでした。`);
+      setEditorNotice(t.importEmpty(action));
     }
 
     setPasteText(null);
@@ -106,29 +118,44 @@ const App = () => {
   return (
     <main className="app-root">
       <header className="app-header">
-        <h1>Stellar Picker</h1>
-        <button
-          type="button"
-          className="panel-toggle-button"
-          onClick={() => setIsEditorVisible((prev) => !prev)}
-          aria-pressed={isEditorVisible}
-          aria-label={isEditorVisible ? '項目パネルを隠す' : '項目パネルを表示'}
-          title={isEditorVisible ? '項目パネルを隠す' : '項目パネルを表示'}
-        >
-          {isEditorVisible ? '🙈' : '👁️'}
-        </button>
+        <h1>{t.appTitle}</h1>
+        <div className="header-actions">
+          <div className="language-switch" role="group" aria-label="Language">
+            {(['ja', 'en'] as Locale[]).map((nextLocale) => (
+              <button
+                key={nextLocale}
+                type="button"
+                className={`language-button ${locale === nextLocale ? 'active' : ''}`}
+                onClick={() => setLocale(nextLocale)}
+                aria-pressed={locale === nextLocale}
+              >
+                {nextLocale.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="panel-toggle-button"
+            onClick={() => setIsEditorVisible((prev) => !prev)}
+            aria-pressed={isEditorVisible}
+            aria-label={isEditorVisible ? t.hideItemPanel : t.showItemPanel}
+            title={isEditorVisible ? t.hideItemPanel : t.showItemPanel}
+          >
+            {isEditorVisible ? '🙈' : '👁️'}
+          </button>
+        </div>
       </header>
 
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
-          <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
+          <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} t={t} />
           <div className="result-controls-row">
             <section
               className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
               aria-live={resultText ? 'polite' : undefined}
               aria-hidden={resultText ? undefined : true}
             >
-              <h2>抽選結果</h2>
+              <h2>{t.result}</h2>
               <p>{resultText ?? '\u00a0'}</p>
             </section>
             <Controls
@@ -137,6 +164,7 @@ const App = () => {
               isRolling={isRolling}
               onStart={start}
               onAccept={accept}
+              t={t}
             />
           </div>
         </div>
@@ -149,6 +177,7 @@ const App = () => {
             onTextChange={updateItemText}
             onStatusChange={updateStatus}
             onRemove={removeItem}
+            t={t}
           />
         )}
       </div>
@@ -161,23 +190,23 @@ const App = () => {
             aria-modal="true"
             aria-labelledby="paste-dialog-title"
           >
-            <h2 id="paste-dialog-title">貼り付けた項目を追加しますか？</h2>
-            <p>{pastedItems.length} 件の項目を検出しました。</p>
-            <div className="paste-preview" aria-label="貼り付け内容のプレビュー">
+            <h2 id="paste-dialog-title">{t.pasteDialogTitle}</h2>
+            <p>{t.pastedItemsDetected(pastedItems.length)}</p>
+            <div className="paste-preview" aria-label={t.pastePreview}>
               {pastedItems.slice(0, 8).map((item, index) => (
                 <div key={`${item}-${index}`}>{item}</div>
               ))}
-              {pastedItems.length > 8 && <div>...ほか {pastedItems.length - 8} 件</div>}
+              {pastedItems.length > 8 && <div>{t.moreItems(pastedItems.length - 8)}</div>}
             </div>
             <div className="dialog-actions">
               <button type="button" onClick={() => handlePasteImport('append')}>
-                追記
+                {t.append}
               </button>
               <button type="button" onClick={() => handlePasteImport('replace')}>
-                新規
+                {t.replace}
               </button>
               <button type="button" onClick={() => setPasteText(null)}>
-                キャンセル
+                {t.cancel}
               </button>
             </div>
           </section>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import type { Translation } from '../i18n';
 import type { Item, Status } from '../types/roulette';
 
 type ItemFilter = 'all' | Status;
@@ -10,25 +11,13 @@ interface ItemEditorProps {
   onTextChange: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   onStatusChange: (id: string, status: Status) => void;
   onRemove: (id: string) => void;
+  t: Translation;
 }
-
-const STATUS_LABEL: Record<Status, string> = {
-  inactive: '非対象',
-  target: '対象',
-  done: '抽選済み',
-};
 
 const STATUS_ICON: Record<Status, string> = {
   inactive: '🚫',
   target: '🎯',
   done: '✅',
-};
-
-const FILTER_LABEL: Record<ItemFilter, string> = {
-  all: 'すべて',
-  target: '対象',
-  inactive: '非対象',
-  done: '抽選済み',
 };
 
 const FILTER_ICON: Record<ItemFilter, string> = {
@@ -38,13 +27,24 @@ const FILTER_ICON: Record<ItemFilter, string> = {
   done: STATUS_ICON.done,
 };
 
-export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove }: ItemEditorProps) => {
+export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove, t }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [editNotice, setEditNotice] = useState<string | null>(null);
   const [focusItemId, setFocusItemId] = useState<string | null>(null);
   const [itemFilter, setItemFilter] = useState<ItemFilter>('all');
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const visibleItems = itemFilter === 'all' ? items : items.filter((item) => item.status === itemFilter);
+  const statusLabel: Record<Status, string> = {
+    inactive: t.inactive,
+    target: t.target,
+    done: t.done,
+  };
+  const filterLabel: Record<ItemFilter, string> = {
+    all: t.filterAll,
+    target: t.target,
+    inactive: t.inactive,
+    done: t.done,
+  };
 
   useEffect(() => {
     if (!focusItemId) {
@@ -72,26 +72,26 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
     }
 
     setDrafts((prev) => ({ ...prev, [item.id]: item.text }));
-    setEditNotice(result.reason === 'duplicate' ? '同じテキストの項目は登録できません。' : '空の項目名は登録できません。');
+    setEditNotice(result.reason === 'duplicate' ? t.duplicateTextError : t.emptyTextError);
   };
 
   return (
     <section className="panel item-editor">
       <div className="item-editor-header">
-        <h2>項目管理</h2>
-        <div className="item-filter-tabs" role="group" aria-label="項目表示フィルタ">
-          <span className="item-filter-label" aria-hidden="true" title="フィルタ">
+        <h2>{t.itemManagement}</h2>
+        <div className="item-filter-tabs" role="group" aria-label={t.filter}>
+          <span className="item-filter-label" aria-hidden="true" title={t.filter}>
             🔎
           </span>
-          {(Object.keys(FILTER_LABEL) as ItemFilter[]).map((filter) => (
+          {(Object.keys(filterLabel) as ItemFilter[]).map((filter) => (
             <button
               key={filter}
               type="button"
               className={`item-filter-button ${itemFilter === filter ? 'active' : ''}`}
               onClick={() => setItemFilter(filter)}
-              aria-label={`${FILTER_LABEL[filter]}を表示`}
+              aria-label={t.showFilter(filterLabel[filter])}
               aria-pressed={itemFilter === filter}
-              title={FILTER_LABEL[filter]}
+              title={filterLabel[filter]}
             >
               <span aria-hidden="true">{FILTER_ICON[filter]}</span>
             </button>
@@ -106,15 +106,15 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
             setFocusItemId(id);
             setEditNotice(null);
           }}
-          aria-label="空の項目を追加"
-          title="空の項目を追加"
+          aria-label={t.addEmptyItem}
+          title={t.addEmptyItem}
         >
           +
         </button>
       </div>
       {(editNotice || notice) && <p className="notice">{editNotice ?? notice}</p>}
       <div className="item-list">
-        {visibleItems.length === 0 && <p className="empty-list-message">該当する項目はありません。</p>}
+        {visibleItems.length === 0 && <p className="empty-list-message">{t.noFilteredItems}</p>}
         {visibleItems.map((item) => (
           <div className="item-row" key={item.id}>
             <input
@@ -136,18 +136,18 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
                   event.currentTarget.blur();
                 }
               }}
-              aria-label="項目テキスト"
+              aria-label={t.itemText}
               title={item.text}
             />
-            <div className="status-buttons" role="group" aria-label="状態切り替え">
-              {(Object.keys(STATUS_LABEL) as Status[]).map((status) => (
+            <div className="status-buttons" role="group" aria-label={t.statusGroup}>
+              {(Object.keys(statusLabel) as Status[]).map((status) => (
                 <button
                   key={status}
                   type="button"
                   className={`status-button ${item.status === status ? 'active' : ''}`}
                   onClick={() => onStatusChange(item.id, status)}
-                  aria-label={`状態を${STATUS_LABEL[status]}に変更`}
-                  title={STATUS_LABEL[status]}
+                  aria-label={t.changeStatus(statusLabel[status])}
+                  title={statusLabel[status]}
                 >
                   <span aria-hidden="true">{STATUS_ICON[status]}</span>
                 </button>
@@ -157,13 +157,13 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
               type="button"
               className="remove-button"
               onClick={() => {
-                const confirmed = window.confirm(`「${item.text}」を削除しますか？`);
+                const confirmed = window.confirm(t.deleteConfirm(item.text));
                 if (confirmed) {
                   onRemove(item.id);
                 }
               }}
-              aria-label="項目を削除"
-              title="削除"
+              aria-label={t.deleteItem}
+              title={t.delete}
             >
               <span aria-hidden="true">🗑️</span>
             </button>
