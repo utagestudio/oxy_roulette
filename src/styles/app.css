@@ -239,6 +239,15 @@ body {
   flex-wrap: wrap;
 }
 
+.control-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 112px;
+  line-height: 1;
+}
+
 button,
 input {
   font: inherit;

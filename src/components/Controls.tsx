@@ -16,11 +16,13 @@ export const Controls = ({
   <section className="panel controls">
     <h2>操作</h2>
     <div className="button-row">
-      <button type="button" onClick={onStart} disabled={!canStart}>
-        {isRolling ? 'Rolling...' : 'Start'}
+      <button type="button" className="control-button" onClick={onStart} disabled={!canStart}>
+        <span aria-hidden="true">🚀</span>
+        <span>{isRolling ? 'Rolling...' : 'Start'}</span>
       </button>
-      <button type="button" onClick={onAccept} disabled={!canAccept}>
-        Accept
+      <button type="button" className="control-button" onClick={onAccept} disabled={!canAccept}>
+        <span aria-hidden="true">✅</span>
+        <span>Accept</span>
       </button>
     </div>
   </section>
