@@ -1,11 +1,9 @@
 import type { Item } from '../types/roulette';
-import type { Translation } from '../i18n';
 
 interface RouletteGridProps {
   targetItems: Item[];
   focusedId: string | null;
   resultId: string | null;
-  t: Translation;
 }
 
 const getGridSize = (count: number): { cols: number; rows: number } => {
@@ -15,7 +13,7 @@ const getGridSize = (count: number): { cols: number; rows: number } => {
   return { cols, rows };
 };
 
-export const RouletteGrid = ({ targetItems, focusedId, resultId, t }: RouletteGridProps) => {
+export const RouletteGrid = ({ targetItems, focusedId, resultId }: RouletteGridProps) => {
   const { cols, rows } = getGridSize(Math.max(targetItems.length, 1));
   const total = cols * rows;
 
@@ -32,9 +30,7 @@ export const RouletteGrid = ({ targetItems, focusedId, resultId, t }: RouletteGr
           const item = targetItems[index];
           if (!item) {
             return (
-              <div className="roulette-cell empty" key={`empty-${index}`}>
-                {t.emptyCell}
-              </div>
+              <div className="roulette-cell empty" key={`empty-${index}`} aria-hidden="true" />
             );
           }
 

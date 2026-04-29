@@ -173,7 +173,7 @@ const App = () => {
 
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
-          <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} t={t} />
+          <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
           <div className="result-controls-row">
             <section
               className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
