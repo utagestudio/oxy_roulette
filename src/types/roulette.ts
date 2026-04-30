@@ -8,6 +8,7 @@ export interface Item {
 
 export interface RouletteSlot {
   id: string;
+  name: string;
   items: Item[];
   lastResultId: string | null;
 }

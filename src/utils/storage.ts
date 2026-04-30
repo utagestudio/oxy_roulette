@@ -7,6 +7,7 @@ const createInitialData = (): RouletteStorageData => ({
   activeSlotId: SLOT_IDS[0],
   slots: SLOT_IDS.map((id) => ({
     id,
+    name: '',
     items: [],
     lastResultId: null,
   })),
@@ -32,6 +33,7 @@ const isValidSlot = (value: unknown): value is RouletteSlot => {
   const slot = value as RouletteSlot;
   return (
     typeof slot.id === 'string'
+    && (typeof slot.name === 'string' || typeof slot.name === 'undefined')
     && Array.isArray(slot.items)
     && slot.items.every(isValidItem)
     && (typeof slot.lastResultId === 'string' || slot.lastResultId === null)
@@ -78,15 +80,23 @@ const migrateLegacyStorageData = (legacy: { items: Item[]; lastResultId: string 
   ...createInitialData(),
   slots: SLOT_IDS.map((id, index) => ({
     id,
+    name: '',
     items: index === 0 ? legacy.items : [],
     lastResultId: index === 0 ? legacy.lastResultId : null,
   })),
 });
 
 const normalizeStorageData = (data: RouletteStorageData): RouletteStorageData => {
-  const slots = SLOT_IDS.map((id) => (
-    data.slots.find((slot) => slot.id === id) ?? { id, items: [], lastResultId: null }
-  ));
+  const slots = SLOT_IDS.map((id) => {
+    const slot = data.slots.find((candidate) => candidate.id === id);
+    if (!slot) {
+      return { id, name: '', items: [], lastResultId: null };
+    }
+
+    const rawName = typeof slot.name === 'string' ? slot.name : '';
+    const name = rawName.trim().length > 0 ? rawName : '';
+    return { ...slot, name };
+  });
 
   return {
     activeSlotId: slots.some((slot) => slot.id === data.activeSlotId) ? data.activeSlotId : SLOT_IDS[0],

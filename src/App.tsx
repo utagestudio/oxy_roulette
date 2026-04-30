@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Controls } from './components/Controls';
 import { ItemEditor } from './components/ItemEditor';
 import { RouletteGrid } from './components/RouletteGrid';
@@ -40,6 +40,7 @@ const App = () => {
     slots,
     activeSlotId,
     selectSlot,
+    renameSlot,
   } = useRoulette();
 
   const [isEditorVisible, setIsEditorVisible] = useState(true);
@@ -50,6 +51,10 @@ const App = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
+  const [editingSlotId, setEditingSlotId] = useState<string | null>(null);
+  const [slotNameDraft, setSlotNameDraft] = useState('');
+  const slotNameInputRef = useRef<HTMLInputElement | null>(null);
+  const skipSlotNameCommitRef = useRef(false);
   const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
@@ -160,6 +165,15 @@ const App = () => {
     return () => window.clearTimeout(timer);
   }, [toastNotice]);
 
+  useEffect(() => {
+    if (!editingSlotId) {
+      return;
+    }
+
+    slotNameInputRef.current?.focus();
+    slotNameInputRef.current?.select();
+  }, [editingSlotId]);
+
   const handlePasteImport = (mode: PasteImportMode) => {
     if (!pasteText) {
       return;
@@ -177,6 +191,38 @@ const App = () => {
     setToastNotice(null);
   };
 
+  const startSlotNameEdit = (id: string, name: string) => {
+    if (isRolling) {
+      return;
+    }
+
+    skipSlotNameCommitRef.current = false;
+    setEditingSlotId(id);
+    setSlotNameDraft(name);
+  };
+
+  const cancelSlotNameEdit = () => {
+    skipSlotNameCommitRef.current = true;
+    setEditingSlotId(null);
+    setSlotNameDraft('');
+  };
+
+  const commitSlotNameEdit = () => {
+    if (skipSlotNameCommitRef.current) {
+      skipSlotNameCommitRef.current = false;
+      return;
+    }
+
+    if (!editingSlotId) {
+      return;
+    }
+
+    const updated = renameSlot(editingSlotId, slotNameDraft);
+    if (updated) {
+      cancelSlotNameEdit();
+    }
+  };
+
   return (
     <main className="app-root">
       <header className="app-header">
@@ -185,19 +231,43 @@ const App = () => {
         </h1>
         <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
           {slots.map((slot, index) => {
-            const label = t.rouletteSlot(index + 1);
+            const label = slot.name.trim().length > 0 ? slot.name : t.rouletteSlot(index + 1);
+            const isEditing = editingSlotId === slot.id;
             return (
-              <button
-                key={slot.id}
-                type="button"
-                className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
-                onClick={() => handleSlotSelect(slot.id)}
-                aria-pressed={slot.id === activeSlotId}
-                disabled={isRolling}
-                title={label}
-              >
-                {label}
-              </button>
+              <div className="roulette-tab-wrap" key={slot.id}>
+                {isEditing ? (
+                  <input
+                    ref={slotNameInputRef}
+                    className="roulette-tab-input"
+                    type="text"
+                    value={slotNameDraft}
+                    onChange={(event) => setSlotNameDraft(event.target.value)}
+                    onBlur={commitSlotNameEdit}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        event.currentTarget.blur();
+                      }
+
+                      if (event.key === 'Escape') {
+                        cancelSlotNameEdit();
+                      }
+                    }}
+                    aria-label={t.renameRouletteSlot}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
+                    onClick={() => handleSlotSelect(slot.id)}
+                    onDoubleClick={() => startSlotNameEdit(slot.id, label)}
+                    aria-pressed={slot.id === activeSlotId}
+                    disabled={isRolling}
+                    title={`${label} / ${t.renameRouletteSlot}`}
+                  >
+                    {label}
+                  </button>
+                )}
+              </div>
             );
           })}
         </nav>

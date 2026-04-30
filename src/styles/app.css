@@ -144,18 +144,42 @@ body {
     0 0 12px #2f9dff1f;
 }
 
-.roulette-tab {
+.roulette-tab-wrap {
+  min-width: 0;
+}
+
+.roulette-tab,
+.roulette-tab-input {
   height: 26px;
+  width: 100%;
+  min-width: 0;
   padding: 0 12px;
   font-size: 12px;
   line-height: 1;
   white-space: nowrap;
 }
 
+.roulette-tab {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .roulette-tab.active {
   border-color: #78e9ff;
   background: #00d4ff33;
   box-shadow: 0 0 12px #00d4ff55;
+}
+
+.roulette-tab-input {
+  color: #f7fbff;
+  text-align: center;
+  background: #07101fcc;
+  border: 1px solid #78e9ff;
+  border-radius: 8px;
+  outline: none;
+  box-shadow:
+    0 0 0 2px #00d4ff33,
+    0 0 12px #00d4ff55;
 }
 
 .app-layout {

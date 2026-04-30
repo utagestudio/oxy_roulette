@@ -21,6 +21,7 @@ interface UseRouletteResult {
   isRolling: boolean;
   canAccept: boolean;
   selectSlot: (id: string) => void;
+  renameSlot: (id: string, name: string) => boolean;
   addEmptyItem: () => string;
   addItemsFromText: (rawText: string, mode: ItemImportMode) => { added: number; duplicates: string[] };
   updateItemText: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
@@ -84,6 +85,16 @@ export const useRoulette = (): UseRouletteResult => {
     setFocusedId(null);
     targetIdsRef.current = [];
     setActiveSlotId(id);
+  };
+
+  const renameSlot = (id: string, name: string): boolean => {
+    const nextName = name.trim();
+    if (nextName.length === 0) {
+      return false;
+    }
+
+    setSlots((prev) => prev.map((slot) => (slot.id === id ? { ...slot, name: nextName } : slot)));
+    return true;
   };
 
   const addItemsFromText = (
@@ -226,6 +237,7 @@ export const useRoulette = (): UseRouletteResult => {
     isRolling,
     canAccept,
     selectSlot,
+    renameSlot,
     addEmptyItem,
     addItemsFromText,
     updateItemText,
