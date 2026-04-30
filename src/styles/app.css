@@ -63,9 +63,9 @@ body {
 }
 
 .app-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 460px) minmax(280px, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
 }
 
@@ -81,6 +81,7 @@ body {
 .header-actions {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
 }
 
@@ -129,8 +130,7 @@ body {
   display: inline-grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
-  align-self: center;
-  width: min(460px, 100%);
+  width: 100%;
   padding: 4px;
   border: 1px solid #355e86;
   border-radius: 10px;

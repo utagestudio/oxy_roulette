@@ -159,6 +159,24 @@ const App = () => {
     <main className="app-root">
       <header className="app-header">
         <h1>{t.appTitle}</h1>
+        <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
+          {slots.map((slot, index) => {
+            const label = t.rouletteSlot(index + 1);
+            return (
+              <button
+                key={slot.id}
+                type="button"
+                className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
+                onClick={() => handleSlotSelect(slot.id)}
+                aria-pressed={slot.id === activeSlotId}
+                disabled={isRolling}
+                title={label}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </nav>
         <div className="header-actions">
           <button
             type="button"
@@ -194,25 +212,6 @@ const App = () => {
           </button>
         </div>
       </header>
-
-      <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
-        {slots.map((slot, index) => {
-          const label = t.rouletteSlot(index + 1);
-          return (
-            <button
-              key={slot.id}
-              type="button"
-              className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
-              onClick={() => handleSlotSelect(slot.id)}
-              aria-pressed={slot.id === activeSlotId}
-              disabled={isRolling}
-              title={label}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </nav>
 
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
