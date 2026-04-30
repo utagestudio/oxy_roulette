@@ -207,6 +207,19 @@ const App = () => {
         )}
       </div>
 
+      <footer className="app-footer">
+        <span>© 2026 UTAGE.GAMES</span>
+        <a href="https://x.com/utage_studio" target="_blank" rel="noreferrer">
+          UTAGE.GAMES X
+        </a>
+        <a href="https://youtube.com/c/utagegames/" target="_blank" rel="noreferrer">
+          UTAGE.GAMES YouTube
+        </a>
+        <a href="https://github.com/utagestudio/oxy_roulette/issues" target="_blank" rel="noreferrer">
+          {t.issueLink}
+        </a>
+      </footer>
+
       {isHelpOpen && (
         <div className="dialog-backdrop" role="presentation" onClick={() => setIsHelpOpen(false)}>
           <section

@@ -136,6 +136,29 @@ body {
   grid-template-columns: 1fr;
 }
 
+.app-footer {
+  min-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: #9fb7ca;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 0 8px #6ed6ff33;
+}
+
+.app-footer a {
+  color: #c7eaff;
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .left-column {
   min-height: 0;
   display: grid;

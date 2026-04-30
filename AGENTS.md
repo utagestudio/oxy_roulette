@@ -38,6 +38,11 @@ Stellar Picker の作成
 - 一般公開向けに、`index.html` の `head` には title / description / OGP / Twitter Card / theme color / favicon などの基本メタ情報を設定する
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する
   - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する
+- アプリ下部には小さなフッターを表示する
+  - copyright として `© 2026 UTAGE.GAMES` を表示する
+  - `UTAGE.GAMES X` は `https://x.com/utage_studio` にリンクする
+  - `UTAGE.GAMES YouTube` は `https://youtube.com/c/utagegames/` にリンクする
+  - `Issue` / `Issues` は `https://github.com/utagestudio/oxy_roulette/issues` にリンクする
 - デザインは、配信画面で視認しやすい宇宙感のある見た目にする
   - 星層や深い宇宙背景を使う
   - パネルは半透明の宇宙船UI風にする
