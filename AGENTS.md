@@ -51,6 +51,7 @@ Stellar Picker の作成
 - 一般公開向けに、`index.html` の `head` には title / description / OGP / Twitter Card / theme color / favicon などの基本メタ情報を設定する
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する
   - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する
+  - favicon は OGP 画像内の `Stellar Picker` ロゴ先頭の `S` を切り出した `public/favicon.png` を使用する
 - アプリ下部には小さなフッターを表示する
   - copyright として `© 2026 UTAGE.GAMES` を表示する
   - `X` は `https://x.com/utage_studio` にリンクする
