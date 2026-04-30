@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Translation } from '../i18n';
 import type { Item, Status } from '../types/roulette';
+import '../styles/ItemEditor.scss';
 
 type ItemFilter = 'all' | Status;
 type EditNotice = 'empty' | 'duplicate';

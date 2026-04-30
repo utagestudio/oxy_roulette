@@ -1,10 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { AppFooter } from './components/AppFooter';
+import { AppHeader } from './components/AppHeader';
 import { Controls } from './components/Controls';
+import { HelpDialog } from './components/HelpDialog';
 import { ItemEditor } from './components/ItemEditor';
+import { PasteImportDialog } from './components/PasteImportDialog';
+import { ResultPanel } from './components/ResultPanel';
 import { RouletteGrid } from './components/RouletteGrid';
+import { ToastNotice } from './components/ToastNotice';
 import { useRoulette } from './hooks/useRoulette';
 import { isLocale, LOCALE_STORAGE_KEY, type Locale, translations } from './i18n';
-import './styles/app.css';
+import './styles/app.scss';
 
 type PasteImportMode = 'append' | 'replace';
 
@@ -51,10 +57,6 @@ const App = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
-  const [editingSlotId, setEditingSlotId] = useState<string | null>(null);
-  const [slotNameDraft, setSlotNameDraft] = useState('');
-  const slotNameInputRef = useRef<HTMLInputElement | null>(null);
-  const skipSlotNameCommitRef = useRef(false);
   const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
@@ -165,15 +167,6 @@ const App = () => {
     return () => window.clearTimeout(timer);
   }, [toastNotice]);
 
-  useEffect(() => {
-    if (!editingSlotId) {
-      return;
-    }
-
-    slotNameInputRef.current?.focus();
-    slotNameInputRef.current?.select();
-  }, [editingSlotId]);
-
   const handlePasteImport = (mode: PasteImportMode) => {
     if (!pasteText) {
       return;
@@ -191,140 +184,27 @@ const App = () => {
     setToastNotice(null);
   };
 
-  const startSlotNameEdit = (id: string, name: string) => {
-    if (isRolling) {
-      return;
-    }
-
-    skipSlotNameCommitRef.current = false;
-    setEditingSlotId(id);
-    setSlotNameDraft(name);
-  };
-
-  const cancelSlotNameEdit = () => {
-    skipSlotNameCommitRef.current = true;
-    setEditingSlotId(null);
-    setSlotNameDraft('');
-  };
-
-  const commitSlotNameEdit = () => {
-    if (skipSlotNameCommitRef.current) {
-      skipSlotNameCommitRef.current = false;
-      return;
-    }
-
-    if (!editingSlotId) {
-      return;
-    }
-
-    const updated = renameSlot(editingSlotId, slotNameDraft);
-    if (updated) {
-      cancelSlotNameEdit();
-    }
-  };
-
   return (
     <main className="app-root">
-      <header className="app-header">
-        <h1>
-          <img className="app-logo" src="/logo.png" alt="Stellar Picker" />
-        </h1>
-        <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
-          {slots.map((slot, index) => {
-            const label = slot.name.trim().length > 0 ? slot.name : t.rouletteSlot(index + 1);
-            const isEditing = editingSlotId === slot.id;
-            return (
-              <div className="roulette-tab-wrap" key={slot.id}>
-                {isEditing ? (
-                  <input
-                    ref={slotNameInputRef}
-                    className="roulette-tab-input"
-                    type="text"
-                    value={slotNameDraft}
-                    onChange={(event) => setSlotNameDraft(event.target.value)}
-                    onBlur={commitSlotNameEdit}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter') {
-                        event.currentTarget.blur();
-                      }
-
-                      if (event.key === 'Escape') {
-                        cancelSlotNameEdit();
-                      }
-                    }}
-                    aria-label={t.renameRouletteSlot}
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
-                    onClick={() => handleSlotSelect(slot.id)}
-                    onDoubleClick={() => startSlotNameEdit(slot.id, label)}
-                    aria-pressed={slot.id === activeSlotId}
-                    disabled={isRolling}
-                    title={`${label} / ${t.renameRouletteSlot}`}
-                  >
-                    <span className="roulette-tab-label">{label}</span>
-                    <span className="roulette-tab-edit-icon" aria-hidden="true">
-                      <svg viewBox="0 0 16 16" focusable="false">
-                        <path d="M3 11.5 3.6 13l1.5-.6 6.8-6.8-2.1-2.1L3 10.3v1.2Z" />
-                        <path d="m10.7 2.6.7-.7a1 1 0 0 1 1.4 0l1.3 1.3a1 1 0 0 1 0 1.4l-.7.7-2.7-2.7Z" />
-                      </svg>
-                    </span>
-                  </button>
-                )}
-              </div>
-            );
-          })}
-        </nav>
-        <div className="header-actions">
-          <button
-            type="button"
-            className="help-button"
-            onClick={() => setIsHelpOpen(true)}
-            aria-label={t.openHelp}
-            title={t.openHelp}
-          >
-            ?
-          </button>
-          <div className="language-switch" role="group" aria-label="Language">
-            {(['ja', 'en'] as Locale[]).map((nextLocale) => (
-              <button
-                key={nextLocale}
-                type="button"
-                className={`language-button ${locale === nextLocale ? 'active' : ''}`}
-                onClick={() => setLocale(nextLocale)}
-                aria-pressed={locale === nextLocale}
-              >
-                {nextLocale.toUpperCase()}
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            className="panel-toggle-button"
-            onClick={() => setIsEditorVisible((prev) => !prev)}
-            aria-pressed={isEditorVisible}
-            aria-label={isEditorVisible ? t.hideItemPanel : t.showItemPanel}
-            title={isEditorVisible ? t.hideItemPanel : t.showItemPanel}
-          >
-            {isEditorVisible ? '🙈' : '👁️'}
-          </button>
-        </div>
-      </header>
+      <AppHeader
+        slots={slots}
+        activeSlotId={activeSlotId}
+        isRolling={isRolling}
+        locale={locale}
+        isEditorVisible={isEditorVisible}
+        onLocaleChange={setLocale}
+        onOpenHelp={() => setIsHelpOpen(true)}
+        onToggleEditor={() => setIsEditorVisible((prev) => !prev)}
+        onSlotSelect={handleSlotSelect}
+        onSlotRename={renameSlot}
+        t={t}
+      />
 
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
           <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
           <div className="result-controls-row">
-            <section
-              className={`panel result-display ${resultText ? '' : 'is-empty'}`.trim()}
-              aria-live={resultText ? 'polite' : undefined}
-              aria-hidden={resultText ? undefined : true}
-            >
-              <h2>{t.result}</h2>
-              <p>{resultText ?? '\u00a0'}</p>
-            </section>
+            <ResultPanel resultText={resultText} t={t} />
             <Controls
               canStart={canStart}
               canAccept={canAccept}
@@ -350,92 +230,19 @@ const App = () => {
         )}
       </div>
 
-      <footer className="app-footer">
-        <span>© 2026 UTAGE.GAMES</span>
-        <a href="https://x.com/utage_studio" target="_blank" rel="noreferrer">
-          X
-        </a>
-        <a href="https://youtube.com/c/utagegames/" target="_blank" rel="noreferrer">
-          YouTube
-        </a>
-        <span aria-hidden="true">-</span>
-        <a href="https://github.com/utagestudio/oxy_roulette/issues" target="_blank" rel="noreferrer">
-          {t.issueLink}
-        </a>
-      </footer>
+      <AppFooter t={t} />
 
-      {toastText && (
-        <div className="toast-notice" role="status" aria-live="polite">
-          {toastText}
-        </div>
-      )}
+      {toastText && <ToastNotice message={toastText} />}
 
-      {isHelpOpen && (
-        <div className="dialog-backdrop" role="presentation" onClick={() => setIsHelpOpen(false)}>
-          <section
-            className="help-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="help-dialog-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="help-dialog-header">
-              <h2 id="help-dialog-title">{t.helpTitle}</h2>
-              <button
-                type="button"
-                className="dialog-close-button"
-                onClick={() => setIsHelpOpen(false)}
-                aria-label={t.closeHelp}
-                title={t.closeHelp}
-              >
-                ×
-              </button>
-            </div>
-            <p className="help-intro">{t.helpIntro}</p>
-            <ol className="help-list">
-              {t.helpSteps.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-            <h3>{t.helpTipsTitle}</h3>
-            <ul className="help-list">
-              {t.helpTips.map((tip) => (
-                <li key={tip}>{tip}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      )}
+      {isHelpOpen && <HelpDialog onClose={() => setIsHelpOpen(false)} t={t} />}
 
       {pasteText && (
-        <div className="dialog-backdrop" role="presentation">
-          <section
-            className="paste-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="paste-dialog-title"
-          >
-            <h2 id="paste-dialog-title">{t.pasteDialogTitle}</h2>
-            <p>{t.pastedItemsDetected(pastedItems.length)}</p>
-            <div className="paste-preview" aria-label={t.pastePreview}>
-              {pastedItems.slice(0, 8).map((item, index) => (
-                <div key={`${item}-${index}`}>{item}</div>
-              ))}
-              {pastedItems.length > 8 && <div>{t.moreItems(pastedItems.length - 8)}</div>}
-            </div>
-            <div className="dialog-actions">
-              <button type="button" onClick={() => handlePasteImport('append')}>
-                {t.append}
-              </button>
-              <button type="button" onClick={() => handlePasteImport('replace')}>
-                {t.replace}
-              </button>
-              <button type="button" onClick={() => setPasteText(null)}>
-                {t.cancel}
-              </button>
-            </div>
-          </section>
-        </div>
+        <PasteImportDialog
+          pastedItems={pastedItems}
+          onImport={handlePasteImport}
+          onCancel={() => setPasteText(null)}
+          t={t}
+        />
       )}
     </main>
   );

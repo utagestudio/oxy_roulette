@@ -1,0 +1,149 @@
+.app-header {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 460px) minmax(280px, 1fr);
+  align-items: center;
+  gap: 12px;
+
+  h1 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.app-logo {
+  display: block;
+  width: auto;
+  height: 32px;
+  object-fit: contain;
+}
+
+.roulette-tabs {
+  min-height: 34px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #355e86;
+  border-radius: 10px;
+  background: #0a1220aa;
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 0 12px #2f9dff1f;
+}
+
+.roulette-tab-wrap {
+  min-width: 0;
+}
+
+.roulette-tab,
+.roulette-tab-input {
+  height: 26px;
+  width: 100%;
+  min-width: 0;
+  padding: 0 12px;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.roulette-tab {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 18px;
+  align-items: center;
+  overflow: hidden;
+
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
+
+  &:hover {
+    .roulette-tab-edit-icon {
+      opacity: 0.9;
+    }
+  }
+}
+
+.roulette-tab-label {
+  grid-column: 2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roulette-tab-edit-icon {
+  grid-column: 3;
+  justify-self: end;
+  width: 11px;
+  height: 11px;
+  opacity: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: #ffeaa2;
+  }
+}
+
+.roulette-tab-input {
+  color: #f7fbff;
+  text-align: center;
+  background: #07101fcc;
+  border: 1px solid #78e9ff;
+  border-radius: 8px;
+  outline: none;
+  box-shadow:
+    0 0 0 2px #00d4ff33,
+    0 0 12px #00d4ff55;
+}
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.language-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #355e86;
+  border-radius: 10px;
+  background: #0a1220aa;
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 0 12px #2f9dff1f;
+}
+
+.language-button {
+  min-width: 42px;
+  height: 30px;
+  padding: 0 8px;
+  font-size: 13px;
+  line-height: 1;
+
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
+}
+
+.help-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #7bbdff;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}

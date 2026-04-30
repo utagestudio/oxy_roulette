@@ -122,13 +122,20 @@ Stellar Picker の作成
 - `src/main.tsx`：エントリポイント
 - `src/App.tsx`：全体レイアウト・画面遷移制御
 - `src/types/roulette.ts`：型定義（`Item`、`Status` など）
+- `src/components/AppHeader.tsx`：ロゴ、ルーレット切り替えタブ、言語切替、ヘルプ/項目パネル切替
+- `src/components/AppFooter.tsx`：フッターリンク
 - `src/components/RouletteGrid.tsx`：グリッド表示
 - `src/components/ItemEditor.tsx`：項目の状態管理UI
 - `src/components/Controls.tsx`：`Start` / `Confirm` など操作UI
+- `src/components/ResultPanel.tsx`：抽選結果表示
+- `src/components/HelpDialog.tsx`：使い方モーダル
+- `src/components/PasteImportDialog.tsx`：貼り付け確認モーダル
+- `src/components/ToastNotice.tsx`：画面端の通知トースト
 - `src/hooks/useRoulette.ts`：抽選ロジック・状態遷移
 - `src/utils/storage.ts`：`localStorage` 入出力
 - `src/utils/random.ts`：乱数・抽選ユーティリティ
-- `src/styles/`：スタイル
+- `src/styles/app.scss`：アプリ全体の土台、レイアウト、共有パネル/ボタン
+- `src/styles/*.scss`：各コンポーネントに対応する固有スタイル
 
 ## localStorage 保存仕様
 - 保存キー：`oni-roulette-v1`
