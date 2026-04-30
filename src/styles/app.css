@@ -160,10 +160,9 @@ body {
 }
 
 .roulette-tab {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 18px;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
   overflow: hidden;
 }
 
@@ -174,21 +173,23 @@ body {
 }
 
 .roulette-tab-label {
+  grid-column: 2;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .roulette-tab-edit-icon {
-  flex: 0 0 auto;
+  grid-column: 3;
+  justify-self: end;
   color: #ffeaa2;
-  font-size: 11px;
-  opacity: 0.45;
+  font-size: 10px;
+  opacity: 0.22;
 }
 
 .roulette-tab:hover .roulette-tab-edit-icon,
 .roulette-tab.active .roulette-tab-edit-icon {
-  opacity: 0.9;
+  opacity: 0.55;
 }
 
 .roulette-tab-input {
