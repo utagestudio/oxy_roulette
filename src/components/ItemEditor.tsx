@@ -3,6 +3,7 @@ import type { Translation } from '../i18n';
 import type { Item, Status } from '../types/roulette';
 
 type ItemFilter = 'all' | Status;
+type EditNotice = 'empty' | 'duplicate';
 
 const STATUS_ORDER: Status[] = ['inactive', 'target', 'done'];
 const FILTER_ORDER: ItemFilter[] = ['all', ...STATUS_ORDER];
@@ -32,7 +33,7 @@ const FILTER_ICON: Record<ItemFilter, string> = {
 
 export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove, t }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
-  const [editNotice, setEditNotice] = useState<string | null>(null);
+  const [editNotice, setEditNotice] = useState<EditNotice | null>(null);
   const [focusItemId, setFocusItemId] = useState<string | null>(null);
   const [itemFilter, setItemFilter] = useState<ItemFilter>('all');
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -48,6 +49,8 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
     inactive: t.inactive,
     done: t.done,
   };
+  const editNoticeText =
+    editNotice === null ? null : editNotice === 'duplicate' ? t.duplicateTextError : t.emptyTextError;
 
   useEffect(() => {
     if (!focusItemId) {
@@ -75,7 +78,7 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
     }
 
     setDrafts((prev) => ({ ...prev, [item.id]: item.text }));
-    setEditNotice(result.reason === 'duplicate' ? t.duplicateTextError : t.emptyTextError);
+    setEditNotice(result.reason === 'duplicate' ? 'duplicate' : 'empty');
   };
 
   return (
@@ -115,7 +118,7 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
           +
         </button>
       </div>
-      {(editNotice || notice) && <p className="notice">{editNotice ?? notice}</p>}
+      {(editNoticeText || notice) && <p className="notice">{editNoticeText ?? notice}</p>}
       <div className="item-list">
         {visibleItems.length === 0 && <p className="empty-list-message">{t.noFilteredItems}</p>}
         {visibleItems.map((item) => (

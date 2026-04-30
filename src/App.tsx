@@ -8,6 +8,12 @@ import './styles/app.css';
 
 type PasteImportMode = 'append' | 'replace';
 
+type EditorNotice = {
+  mode: PasteImportMode;
+  added: number;
+  duplicates: string[];
+};
+
 const App = () => {
   const {
     items,
@@ -31,7 +37,7 @@ const App = () => {
   });
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
-  const [editorNotice, setEditorNotice] = useState<string | null>(null);
+  const [editorNotice, setEditorNotice] = useState<EditorNotice | null>(null);
   const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
@@ -53,6 +59,24 @@ const App = () => {
 
     return items.find((item) => item.id === resultId)?.text ?? null;
   }, [items, resultId]);
+
+  const editorNoticeText = useMemo(() => {
+    if (!editorNotice) {
+      return null;
+    }
+
+    const action = editorNotice.mode === 'append' ? t.appendAction : t.replaceAction;
+
+    if (editorNotice.duplicates.length > 0) {
+      return t.importWithDuplicates(action, editorNotice.added, editorNotice.duplicates.join(', '));
+    }
+
+    if (editorNotice.added > 0) {
+      return t.importAdded(action, editorNotice.added);
+    }
+
+    return t.importEmpty(action);
+  }, [editorNotice, t]);
 
   const canStart = !isRolling && targetItems.length > 0;
 
@@ -117,15 +141,7 @@ const App = () => {
     }
 
     const { added, duplicates } = addItemsFromText(pasteText, mode);
-    const action = mode === 'append' ? t.appendAction : t.replaceAction;
-
-    if (duplicates.length > 0) {
-      setEditorNotice(t.importWithDuplicates(action, added, duplicates.join(', ')));
-    } else if (added > 0) {
-      setEditorNotice(t.importAdded(action, added));
-    } else {
-      setEditorNotice(t.importEmpty(action));
-    }
+    setEditorNotice({ mode, added, duplicates });
 
     setPasteText(null);
     setIsEditorVisible(true);
@@ -197,7 +213,7 @@ const App = () => {
         {isEditorVisible && (
           <ItemEditor
             items={items}
-            notice={editorNotice}
+            notice={editorNoticeText}
             onAddEmpty={addEmptyItem}
             onTextChange={updateItemText}
             onStatusChange={updateStatus}
