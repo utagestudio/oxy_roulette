@@ -160,14 +160,35 @@ body {
 }
 
 .roulette-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .roulette-tab.active {
   border-color: #78e9ff;
   background: #00d4ff33;
   box-shadow: 0 0 12px #00d4ff55;
+}
+
+.roulette-tab-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roulette-tab-edit-icon {
+  flex: 0 0 auto;
+  color: #ffeaa2;
+  font-size: 11px;
+  opacity: 0.45;
+}
+
+.roulette-tab:hover .roulette-tab-edit-icon,
+.roulette-tab.active .roulette-tab-edit-icon {
+  opacity: 0.9;
 }
 
 .roulette-tab-input {

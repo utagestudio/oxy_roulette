@@ -264,7 +264,10 @@ const App = () => {
                     disabled={isRolling}
                     title={`${label} / ${t.renameRouletteSlot}`}
                   >
-                    {label}
+                    <span className="roulette-tab-label">{label}</span>
+                    <span className="roulette-tab-edit-icon" aria-hidden="true">
+                      ✎
+                    </span>
                   </button>
                 )}
               </div>
