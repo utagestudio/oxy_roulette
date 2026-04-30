@@ -1,5 +1,5 @@
 import type { Translation } from '../i18n';
-import '../styles/AppFooter.css';
+import '../styles/AppFooter.scss';
 
 interface AppFooterProps {
   t: Translation;

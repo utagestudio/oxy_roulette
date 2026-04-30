@@ -5,11 +5,17 @@
   border: 1px solid #81b8ff;
   border-radius: 10px;
   box-shadow: 0 20px 48px #00000088;
-}
 
-.help-dialog h2 {
-  margin: 0 0 10px;
-  font-size: 22px;
+  h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+  }
+
+  h3 {
+    margin: 18px 0 8px;
+    color: #ffeaa2;
+    font-size: 17px;
+  }
 }
 
 .help-dialog-header {
@@ -36,19 +42,13 @@
   line-height: 1.6;
 }
 
-.help-dialog h3 {
-  margin: 18px 0 8px;
-  color: #ffeaa2;
-  font-size: 17px;
-}
-
 .help-list {
   margin: 0;
   padding-left: 24px;
   color: #f7fbff;
   line-height: 1.7;
-}
 
-.help-list li + li {
-  margin-top: 6px;
+  li + li {
+    margin-top: 6px;
+  }
 }

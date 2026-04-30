@@ -1,5 +1,5 @@
 import type { Translation } from '../i18n';
-import '../styles/HelpDialog.css';
+import '../styles/HelpDialog.scss';
 
 interface HelpDialogProps {
   onClose: () => void;

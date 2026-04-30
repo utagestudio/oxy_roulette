@@ -10,7 +10,7 @@ import { RouletteGrid } from './components/RouletteGrid';
 import { ToastNotice } from './components/ToastNotice';
 import { useRoulette } from './hooks/useRoulette';
 import { isLocale, LOCALE_STORAGE_KEY, type Locale, translations } from './i18n';
-import './styles/app.css';
+import './styles/app.scss';
 
 type PasteImportMode = 'append' | 'replace';
 

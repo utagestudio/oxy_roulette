@@ -1,4 +1,4 @@
-import '../styles/ToastNotice.css';
+import '../styles/ToastNotice.scss';
 
 interface ToastNoticeProps {
   message: string;

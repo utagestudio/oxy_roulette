@@ -3,12 +3,12 @@
   grid-template-columns: minmax(280px, 1fr) minmax(0, 460px) minmax(280px, 1fr);
   align-items: center;
   gap: 12px;
-}
 
-.app-header h1 {
-  margin: 0;
-  display: flex;
-  align-items: center;
+  h1 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .app-logo {
@@ -53,12 +53,18 @@
   grid-template-columns: 18px minmax(0, 1fr) 18px;
   align-items: center;
   overflow: hidden;
-}
 
-.roulette-tab.active {
-  border-color: #78e9ff;
-  background: #00d4ff33;
-  box-shadow: 0 0 12px #00d4ff55;
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
+
+  &:hover {
+    .roulette-tab-edit-icon {
+      opacity: 0.9;
+    }
+  }
 }
 
 .roulette-tab-label {
@@ -74,17 +80,13 @@
   width: 11px;
   height: 11px;
   opacity: 0;
-}
 
-.roulette-tab-edit-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  fill: #ffeaa2;
-}
-
-.roulette-tab:hover .roulette-tab-edit-icon {
-  opacity: 0.9;
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: #ffeaa2;
+  }
 }
 
 .roulette-tab-input {
@@ -124,12 +126,12 @@
   padding: 0 8px;
   font-size: 13px;
   line-height: 1;
-}
 
-.language-button.active {
-  border-color: #78e9ff;
-  background: #00d4ff33;
-  box-shadow: 0 0 12px #00d4ff55;
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
 }
 
 .help-button {

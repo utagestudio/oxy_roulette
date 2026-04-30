@@ -10,21 +10,21 @@
     inset 0 1px 0 #ffffff24,
     0 0 22px #3aa8ff3d,
     0 12px 30px #00000066;
-}
 
-.result-display p {
-  margin: 0;
-  color: #ffeaa2;
-  font-size: 44px;
-  font-weight: 800;
-  line-height: 1.25;
-  text-shadow:
-    0 0 10px #ffe26a99,
-    0 0 22px #ff9b4a66;
-  word-break: break-word;
-  overflow-wrap: anywhere;
-}
+  p {
+    margin: 0;
+    color: #ffeaa2;
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow:
+      0 0 10px #ffe26a99,
+      0 0 22px #ff9b4a66;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
 
-.result-display.is-empty {
-  visibility: hidden;
+  &.is-empty {
+    visibility: hidden;
+  }
 }

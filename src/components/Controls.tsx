@@ -1,5 +1,5 @@
 import type { Translation } from '../i18n';
-import '../styles/Controls.css';
+import '../styles/Controls.scss';
 
 interface ControlsProps {
   canStart: boolean;

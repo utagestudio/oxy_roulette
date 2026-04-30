@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Locale, Translation } from '../i18n';
 import type { RouletteSlot } from '../types/roulette';
-import '../styles/AppHeader.css';
+import '../styles/AppHeader.scss';
 
 interface AppHeaderProps {
   slots: RouletteSlot[];

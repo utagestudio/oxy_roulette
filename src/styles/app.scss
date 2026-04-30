@@ -47,19 +47,19 @@ button {
   box-shadow:
     inset 0 1px 0 #ffffff20,
     0 0 12px #2f9dff22;
-}
 
-button:hover:not(:disabled) {
-  border-color: #8ddcff;
-  background: linear-gradient(180deg, #2c5075 0%, #173655 100%);
-  box-shadow:
-    inset 0 1px 0 #ffffff28,
-    0 0 16px #2f9dff55;
-}
+  &:hover:not(:disabled) {
+    border-color: #8ddcff;
+    background: linear-gradient(180deg, #2c5075 0%, #173655 100%);
+    box-shadow:
+      inset 0 1px 0 #ffffff28,
+      0 0 16px #2f9dff55;
+  }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .app-root {
@@ -71,25 +71,25 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
 
-.app-root::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, #6ed6ff16 1px, transparent 1px),
-    linear-gradient(#6ed6ff10 1px, transparent 1px),
-    radial-gradient(ellipse at 24% 30%, #2467b844 0%, transparent 38%),
-    radial-gradient(ellipse at 78% 74%, #b86b2440 0%, transparent 36%);
-  background-size:
-    80px 80px,
-    80px 80px,
-    100% 100%,
-    100% 100%;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
-  pointer-events: none;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, #6ed6ff16 1px, transparent 1px),
+      linear-gradient(#6ed6ff10 1px, transparent 1px),
+      radial-gradient(ellipse at 24% 30%, #2467b844 0%, transparent 38%),
+      radial-gradient(ellipse at 78% 74%, #b86b2440 0%, transparent 36%);
+    background-size:
+      80px 80px,
+      80px 80px,
+      100% 100%,
+      100% 100%;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+    pointer-events: none;
+  }
 }
 
 .app-layout {
@@ -98,10 +98,10 @@ button:disabled {
   grid-template-columns: 2fr 1fr;
   gap: 12px;
   min-height: 0;
-}
 
-.app-layout.editor-hidden {
-  grid-template-columns: 1fr;
+  &.editor-hidden {
+    grid-template-columns: 1fr;
+  }
 }
 
 .left-column {
@@ -130,13 +130,13 @@ button:disabled {
     0 0 0 1px #07101fcc,
     0 12px 30px #00000055;
   backdrop-filter: blur(6px);
-}
 
-.panel h2 {
-  margin: 0 0 10px;
-  color: #d9f3ff;
-  font-size: 18px;
-  text-shadow: 0 0 8px #6ed6ff55;
+  h2 {
+    margin: 0 0 10px;
+    color: #d9f3ff;
+    font-size: 18px;
+    text-shadow: 0 0 8px #6ed6ff55;
+  }
 }
 
 .dialog-backdrop {

@@ -1,5 +1,5 @@
 import type { Translation } from '../i18n';
-import '../styles/PasteImportDialog.css';
+import '../styles/PasteImportDialog.scss';
 
 type PasteImportMode = 'append' | 'replace';
 

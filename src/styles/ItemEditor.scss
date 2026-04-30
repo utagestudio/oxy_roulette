@@ -9,11 +9,11 @@
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-}
 
-.item-editor-header h2 {
-  flex: 1;
-  margin: 0;
+  h2 {
+    flex: 1;
+    margin: 0;
+  }
 }
 
 .add-item-button {
@@ -26,10 +26,10 @@
   border-color: #7bbdff;
   font-size: 22px;
   line-height: 1;
-}
 
-.add-item-button:hover {
-  background: #1c5173;
+  &:hover {
+    background: #1c5173;
+  }
 }
 
 .item-filter-tabs {
@@ -65,12 +65,12 @@
   justify-content: center;
   font-size: 15px;
   line-height: 1;
-}
 
-.item-filter-button.active {
-  border-color: #78e9ff;
-  background: #00d4ff33;
-  box-shadow: 0 0 12px #00d4ff55;
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
 }
 
 .item-list {
@@ -111,12 +111,12 @@
   border-color: #4d6f91;
   font-size: 16px;
   line-height: 1;
-}
 
-.status-button.active {
-  border-color: #78e9ff;
-  background: #00d4ff33;
-  box-shadow: 0 0 12px #00d4ff55;
+  &.active {
+    border-color: #78e9ff;
+    background: #00d4ff33;
+    box-shadow: 0 0 12px #00d4ff55;
+  }
 }
 
 .remove-button {
@@ -129,10 +129,10 @@
   border-color: #855454;
   font-size: 16px;
   line-height: 1;
-}
 
-.remove-button:hover {
-  background: #79313c;
+  &:hover {
+    background: #79313c;
+  }
 }
 
 .item-text-input {
@@ -147,12 +147,12 @@
   background: #0a1220cc;
   border: 1px solid #355e86;
   border-radius: 8px;
-}
 
-.item-text-input:focus {
-  border-color: #78e9ff;
-  outline: none;
-  box-shadow:
-    0 0 0 2px #00d4ff33,
-    0 0 12px #00d4ff44;
+  &:focus {
+    border-color: #78e9ff;
+    outline: none;
+    box-shadow:
+      0 0 0 2px #00d4ff33,
+      0 0 12px #00d4ff44;
+  }
 }
