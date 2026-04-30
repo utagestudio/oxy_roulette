@@ -6,7 +6,7 @@ export const isLocale = (value: string | null): value is Locale => value === 'ja
 
 export const translations = {
   ja: {
-    appTitle: 'ステラピッカー',
+    appTitle: 'Stellar Picker',
     openHelp: '使い方を表示',
     closeHelp: '使い方を閉じる',
     helpTitle: '使い方',

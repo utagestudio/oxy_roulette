@@ -71,11 +71,15 @@ body {
 
 .app-header h1 {
   margin: 0;
-  font-size: 28px;
-  color: #f8fbff;
-  text-shadow:
-    0 0 10px #6ed6ff88,
-    0 0 24px #d09bff55;
+  display: flex;
+  align-items: center;
+}
+
+.app-logo {
+  display: block;
+  width: auto;
+  height: 32px;
+  object-fit: contain;
 }
 
 .header-actions {

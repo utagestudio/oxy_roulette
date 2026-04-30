@@ -158,7 +158,9 @@ const App = () => {
   return (
     <main className="app-root">
       <header className="app-header">
-        <h1>{t.appTitle}</h1>
+        <h1>
+          <img className="app-logo" src="/logo.png" alt="Stellar Picker" />
+        </h1>
         <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
           {slots.map((slot, index) => {
             const label = t.rouletteSlot(index + 1);
