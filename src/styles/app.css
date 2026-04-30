@@ -184,7 +184,7 @@ body {
   justify-self: end;
   width: 11px;
   height: 11px;
-  opacity: 0.22;
+  opacity: 0;
 }
 
 .roulette-tab-edit-icon svg {
@@ -196,7 +196,7 @@ body {
 
 .roulette-tab:hover .roulette-tab-edit-icon,
 .roulette-tab.active .roulette-tab-edit-icon {
-  opacity: 0.55;
+  opacity: 0.9;
 }
 
 .roulette-tab-input {
