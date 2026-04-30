@@ -266,7 +266,10 @@ const App = () => {
                   >
                     <span className="roulette-tab-label">{label}</span>
                     <span className="roulette-tab-edit-icon" aria-hidden="true">
-                      ✎
+                      <svg viewBox="0 0 16 16" focusable="false">
+                        <path d="M3 11.5 3.6 13l1.5-.6 6.8-6.8-2.1-2.1L3 10.3v1.2Z" />
+                        <path d="m10.7 2.6.7-.7a1 1 0 0 1 1.4 0l1.3 1.3a1 1 0 0 1 0 1.4l-.7.7-2.7-2.7Z" />
+                      </svg>
                     </span>
                   </button>
                 )}
