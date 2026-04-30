@@ -1,0 +1,158 @@
+.item-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.item-editor-header h2 {
+  flex: 1;
+  margin: 0;
+}
+
+.add-item-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #7bbdff;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.add-item-button:hover {
+  background: #1c5173;
+}
+
+.item-filter-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #355e86;
+  border-radius: 10px;
+  background: #0a1220aa;
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 0 12px #2f9dff1f;
+}
+
+.item-filter-label {
+  width: 28px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.item-filter-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.item-filter-button.active {
+  border-color: #78e9ff;
+  background: #00d4ff33;
+  box-shadow: 0 0 12px #00d4ff55;
+}
+
+.item-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+.empty-list-message {
+  margin: 8px 0 0;
+  color: #8fa9bf;
+  font-size: 14px;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.status-buttons {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.status-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #4d6f91;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.status-button.active {
+  border-color: #78e9ff;
+  background: #00d4ff33;
+  box-shadow: 0 0 12px #00d4ff55;
+}
+
+.remove-button {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #855454;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.remove-button:hover {
+  background: #79313c;
+}
+
+.item-text-input {
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  padding: 0 8px;
+  overflow: hidden;
+  color: #f7fbff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: #0a1220cc;
+  border: 1px solid #355e86;
+  border-radius: 8px;
+}
+
+.item-text-input:focus {
+  border-color: #78e9ff;
+  outline: none;
+  box-shadow:
+    0 0 0 2px #00d4ff33,
+    0 0 12px #00d4ff44;
+}

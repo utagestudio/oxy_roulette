@@ -1,3 +1,5 @@
+import '../styles/ToastNotice.css';
+
 interface ToastNoticeProps {
   message: string;
 }

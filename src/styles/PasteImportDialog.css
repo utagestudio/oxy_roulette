@@ -1,0 +1,41 @@
+.paste-dialog {
+  width: min(640px, calc(100vw - 48px));
+  padding: 18px;
+  background: linear-gradient(180deg, #17233d 0%, #0d1325 100%);
+  border: 1px solid #81b8ff;
+  border-radius: 10px;
+  box-shadow: 0 20px 48px #00000088;
+}
+
+.paste-dialog h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.paste-dialog p {
+  margin: 0 0 12px;
+  color: #d9f3ff;
+}
+
+.paste-preview {
+  max-height: 220px;
+  overflow: auto;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  color: #f7fbff;
+  background: #0a1220cc;
+  border: 1px solid #355e86;
+  border-radius: 8px;
+}
+
+.paste-preview div {
+  overflow-wrap: anywhere;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}

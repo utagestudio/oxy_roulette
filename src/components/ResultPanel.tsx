@@ -1,4 +1,5 @@
 import type { Translation } from '../i18n';
+import '../styles/ResultPanel.css';
 
 interface ResultPanelProps {
   resultText: string | null;

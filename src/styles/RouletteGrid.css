@@ -1,0 +1,69 @@
+.roulette-grid {
+  height: 100%;
+  display: grid;
+  gap: 8px;
+}
+
+.roulette-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6px;
+  color: #e7f5ff;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  background:
+    linear-gradient(0deg, #142036 0%, #17233a 100%);
+  border: 1px solid #355e86;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 0 0 1px #07101f99;
+}
+
+.roulette-cell.empty {
+  color: #6e8296;
+  border-style: dashed;
+  background: #0c1322aa;
+}
+
+.roulette-cell.active {
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, #104d68 0%, #159fc4 52%, #2b7a55 100%);
+  border-color: #78e9ff;
+  box-shadow:
+    0 0 0 2px #78e9ff66,
+    0 0 18px #00d4ff88,
+    0 0 34px #7dffb155;
+  animation: roulette-active-pulse 0.55s ease-in-out infinite alternate;
+}
+
+.roulette-cell.won {
+  color: #fff;
+  text-shadow: 0 1px 2px #2f2300;
+  background:
+    linear-gradient(135deg, #426612 0%, #bd8a26 58%, #ffe171 100%);
+  border-color: #ffe68a;
+  box-shadow:
+    0 0 0 2px #ffe68a66,
+    0 0 20px #ffe26a88,
+    0 0 36px #75ff9a44;
+}
+
+@keyframes roulette-active-pulse {
+  from {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  to {
+    transform: scale(1.03);
+    filter: brightness(1.15);
+  }
+}

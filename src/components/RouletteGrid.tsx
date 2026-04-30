@@ -1,4 +1,5 @@
 import type { Item } from '../types/roulette';
+import '../styles/RouletteGrid.css';
 
 interface RouletteGridProps {
   targetItems: Item[];

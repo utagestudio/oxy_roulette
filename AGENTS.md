@@ -134,7 +134,8 @@ Stellar Picker の作成
 - `src/hooks/useRoulette.ts`：抽選ロジック・状態遷移
 - `src/utils/storage.ts`：`localStorage` 入出力
 - `src/utils/random.ts`：乱数・抽選ユーティリティ
-- `src/styles/`：スタイル
+- `src/styles/app.css`：アプリ全体の土台、レイアウト、共有パネル/ボタン
+- `src/styles/*.css`：各コンポーネントに対応する固有スタイル
 
 ## localStorage 保存仕様
 - 保存キー：`oni-roulette-v1`
