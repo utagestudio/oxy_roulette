@@ -194,8 +194,7 @@ body {
   fill: #ffeaa2;
 }
 
-.roulette-tab:hover .roulette-tab-edit-icon,
-.roulette-tab.active .roulette-tab-edit-icon {
+.roulette-tab:hover .roulette-tab-edit-icon {
   opacity: 0.9;
 }
 
