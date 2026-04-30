@@ -28,6 +28,9 @@ const App = () => {
     removeItem,
     start,
     accept,
+    slots,
+    activeSlotId,
+    selectSlot,
   } = useRoulette();
 
   const [isEditorVisible, setIsEditorVisible] = useState(true);
@@ -147,6 +150,11 @@ const App = () => {
     setIsEditorVisible(true);
   };
 
+  const handleSlotSelect = (id: string) => {
+    selectSlot(id);
+    setEditorNotice(null);
+  };
+
   return (
     <main className="app-root">
       <header className="app-header">
@@ -187,6 +195,25 @@ const App = () => {
         </div>
       </header>
 
+      <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
+        {slots.map((slot, index) => {
+          const label = t.rouletteSlot(index + 1);
+          return (
+            <button
+              key={slot.id}
+              type="button"
+              className={`roulette-tab ${slot.id === activeSlotId ? 'active' : ''}`}
+              onClick={() => handleSlotSelect(slot.id)}
+              aria-pressed={slot.id === activeSlotId}
+              disabled={isRolling}
+              title={label}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </nav>
+
       <div className={`app-layout ${isEditorVisible ? '' : 'editor-hidden'}`.trim()}>
         <div className="left-column">
           <RouletteGrid targetItems={targetItems} focusedId={focusedId} resultId={resultId} />
@@ -212,6 +239,7 @@ const App = () => {
 
         {isEditorVisible && (
           <ItemEditor
+            key={activeSlotId}
             items={items}
             notice={editorNoticeText}
             onAddEmpty={addEmptyItem}

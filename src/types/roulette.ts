@@ -6,8 +6,14 @@ export interface Item {
   status: Status;
 }
 
-export interface RouletteStorageData {
+export interface RouletteSlot {
+  id: string;
   items: Item[];
   lastResultId: string | null;
+}
+
+export interface RouletteStorageData {
+  activeSlotId: string;
+  slots: RouletteSlot[];
   updatedAt: string;
 }

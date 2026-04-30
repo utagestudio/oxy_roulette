@@ -9,6 +9,9 @@ Stellar Picker の作成
 - ブラウザで動くルーレットアプリを作る
   - ここでいう「ルーレット」とは「リストハイライト形式」を表し、便宜上「ルーレット」と呼称する
 - ルーレットの項目は、ユーザーが任意に指定できる（抽選項目仕様参照）
+- ルーレットは3つの保存スロットを持ち、タブで切り替えられる
+  - 各タブは項目リスト、状態、未確定の抽選結果を独立して保持する
+  - 抽選中はタブ切り替えを無効化する
 - ルーレットのスタートボタンを配置し、クリックするとルーレットが回る
   - 操作ボタンは日本語版では `スタート` / `確定`、英語版では `Start` / `Confirm` と表示する
   - `スタート` / `確定` ボタンには、それぞれ意味が分かる大きなアイコンを配置し、アイコンの下にラベルを表示する
@@ -121,9 +124,11 @@ Stellar Picker の作成
 ## localStorage 保存仕様
 - 保存キー：`oni-roulette-v1`
 - 保存データ：
-  - `items: { id: string; text: string; status: "inactive" | "target" | "done" }[]`
-  - `lastResultId: string | null`
+  - `activeSlotId: string`
+  - `slots: { id: string; items: { id: string; text: string; status: "inactive" | "target" | "done" }[]; lastResultId: string | null }[]`
   - `updatedAt: string`（ISO文字列）
+- スロットは3件固定とする
+- 旧形式の `{ items, lastResultId, updatedAt }` が保存されている場合は、1番目のスロットへ移行する
 - 起動時にJSONパース失敗時は初期化する
 
 ## ワークフロー

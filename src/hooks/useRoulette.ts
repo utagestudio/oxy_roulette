@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { Item, Status } from '../types/roulette';
+import type { Item, RouletteSlot, Status } from '../types/roulette';
 import { loadStorage, saveStorage } from '../utils/storage';
 import {
   createRouletteIntervals,
@@ -13,11 +13,14 @@ import { playRouletteResult, playRouletteTick } from '../utils/sound';
 type ItemImportMode = 'append' | 'replace';
 
 interface UseRouletteResult {
+  slots: RouletteSlot[];
+  activeSlotId: string;
   items: Item[];
   focusedId: string | null;
   resultId: string | null;
   isRolling: boolean;
   canAccept: boolean;
+  selectSlot: (id: string) => void;
   addEmptyItem: () => string;
   addItemsFromText: (rawText: string, mode: ItemImportMode) => { added: number; duplicates: string[] };
   updateItemText: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
@@ -37,17 +40,28 @@ const createId = (): string => {
 
 export const useRoulette = (): UseRouletteResult => {
   const initial = useMemo(() => loadStorage(), []);
-  const [items, setItems] = useState<Item[]>(initial.items);
+  const [slots, setSlots] = useState<RouletteSlot[]>(initial.slots);
+  const [activeSlotId, setActiveSlotId] = useState(initial.activeSlotId);
   const [focusedId, setFocusedId] = useState<string | null>(null);
-  const [resultId, setResultId] = useState<string | null>(initial.lastResultId);
   const [isRolling, setIsRolling] = useState(false);
 
   const timerRef = useRef<number | null>(null);
   const targetIdsRef = useRef<string[]>([]);
+  const activeSlot = slots.find((slot) => slot.id === activeSlotId) ?? slots[0];
+  const items = activeSlot?.items ?? [];
+  const resultId = activeSlot?.lastResultId ?? null;
+
+  const updateActiveSlot = (updater: (slot: RouletteSlot) => RouletteSlot): void => {
+    setSlots((prev) => prev.map((slot) => (slot.id === activeSlotId ? updater(slot) : slot)));
+  };
+
+  const setActiveSlotResultId = (nextResultId: string | null): void => {
+    updateActiveSlot((slot) => ({ ...slot, lastResultId: nextResultId }));
+  };
 
   useEffect(() => {
-    saveStorage({ items, lastResultId: resultId });
-  }, [items, resultId]);
+    saveStorage({ activeSlotId, slots });
+  }, [activeSlotId, slots]);
 
   useEffect(() => () => {
     if (timerRef.current !== null) {
@@ -61,6 +75,16 @@ export const useRoulette = (): UseRouletteResult => {
   );
 
   const canAccept = !isRolling && resultId !== null;
+
+  const selectSlot = (id: string): void => {
+    if (isRolling || id === activeSlotId || !slots.some((slot) => slot.id === id)) {
+      return;
+    }
+
+    setFocusedId(null);
+    targetIdsRef.current = [];
+    setActiveSlotId(id);
+  };
 
   const addItemsFromText = (
     rawText: string,
@@ -90,11 +114,10 @@ export const useRoulette = (): UseRouletteResult => {
     });
 
     if (mode === 'replace') {
-      setItems(newItems);
+      updateActiveSlot((slot) => ({ ...slot, items: newItems, lastResultId: null }));
       setFocusedId(null);
-      setResultId(null);
     } else if (newItems.length > 0) {
-      setItems((prev) => [...prev, ...newItems]);
+      updateActiveSlot((slot) => ({ ...slot, items: [...slot.items, ...newItems] }));
     }
 
     return { added: newItems.length, duplicates };
@@ -102,12 +125,15 @@ export const useRoulette = (): UseRouletteResult => {
 
   const addEmptyItem = (): string => {
     const id = createId();
-    setItems((prev) => [{ id, text: '', status: 'target' }, ...prev]);
+    updateActiveSlot((slot) => ({ ...slot, items: [{ id, text: '', status: 'target' }, ...slot.items] }));
     return id;
   };
 
   const updateStatus = (id: string, status: Status): void => {
-    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status } : item)));
+    updateActiveSlot((slot) => ({
+      ...slot,
+      items: slot.items.map((item) => (item.id === id ? { ...item, status } : item)),
+    }));
   };
 
   const updateItemText = (id: string, text: string): { updated: boolean; reason?: 'empty' | 'duplicate' } => {
@@ -121,14 +147,17 @@ export const useRoulette = (): UseRouletteResult => {
       return { updated: false, reason: 'duplicate' };
     }
 
-    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, text: nextText } : item)));
+    updateActiveSlot((slot) => ({
+      ...slot,
+      items: slot.items.map((item) => (item.id === id ? { ...item, text: nextText } : item)),
+    }));
     return { updated: true };
   };
 
   const removeItem = (id: string): void => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+    updateActiveSlot((slot) => ({ ...slot, items: slot.items.filter((item) => item.id !== id) }));
     if (resultId === id) {
-      setResultId(null);
+      setActiveSlotResultId(null);
       setFocusedId(null);
     }
   };
@@ -144,7 +173,7 @@ export const useRoulette = (): UseRouletteResult => {
     targetIdsRef.current = targetItems.map((item) => item.id);
 
     setIsRolling(true);
-    setResultId(null);
+    setActiveSlotResultId(null);
 
     let index = 0;
     let previousFocusedId: string | null = null;
@@ -154,7 +183,7 @@ export const useRoulette = (): UseRouletteResult => {
 
       if (lastStep) {
         setFocusedId(winner.id);
-        setResultId(winner.id);
+        setActiveSlotResultId(winner.id);
         setIsRolling(false);
         timerRef.current = null;
         playRouletteResult();
@@ -180,17 +209,23 @@ export const useRoulette = (): UseRouletteResult => {
       return;
     }
 
-    setItems((prev) => prev.map((item) => (item.id === resultId ? { ...item, status: 'done' } : item)));
+    updateActiveSlot((slot) => ({
+      ...slot,
+      items: slot.items.map((item) => (item.id === resultId ? { ...item, status: 'done' } : item)),
+      lastResultId: null,
+    }));
     setFocusedId(null);
-    setResultId(null);
   };
 
   return {
+    slots,
+    activeSlotId,
     items,
     focusedId,
     resultId,
     isRolling,
     canAccept,
+    selectSlot,
     addEmptyItem,
     addItemsFromText,
     updateItemText,
