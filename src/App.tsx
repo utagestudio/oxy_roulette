@@ -8,10 +8,19 @@ import './styles/app.css';
 
 type PasteImportMode = 'append' | 'replace';
 
-type EditorNotice = {
-  mode: PasteImportMode;
-  added: number;
-  duplicates: string[];
+type ToastNotice = (
+  | {
+      type: 'import';
+      mode: PasteImportMode;
+      added: number;
+      duplicates: string[];
+    }
+  | {
+      type: 'edit-error';
+      reason: 'empty' | 'duplicate';
+    }
+) & {
+  id: number;
 };
 
 const App = () => {
@@ -40,7 +49,7 @@ const App = () => {
   });
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
-  const [editorNotice, setEditorNotice] = useState<EditorNotice | null>(null);
+  const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
   const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
@@ -63,23 +72,27 @@ const App = () => {
     return items.find((item) => item.id === resultId)?.text ?? null;
   }, [items, resultId]);
 
-  const editorNoticeText = useMemo(() => {
-    if (!editorNotice) {
+  const toastText = useMemo(() => {
+    if (!toastNotice) {
       return null;
     }
 
-    const action = editorNotice.mode === 'append' ? t.appendAction : t.replaceAction;
-
-    if (editorNotice.duplicates.length > 0) {
-      return t.importWithDuplicates(action, editorNotice.added, editorNotice.duplicates.join(', '));
+    if (toastNotice.type === 'edit-error') {
+      return toastNotice.reason === 'duplicate' ? t.duplicateTextError : t.emptyTextError;
     }
 
-    if (editorNotice.added > 0) {
-      return t.importAdded(action, editorNotice.added);
+    const action = toastNotice.mode === 'append' ? t.appendAction : t.replaceAction;
+
+    if (toastNotice.duplicates.length > 0) {
+      return t.importWithDuplicates(action, toastNotice.added, toastNotice.duplicates.join(', '));
+    }
+
+    if (toastNotice.added > 0) {
+      return t.importAdded(action, toastNotice.added);
     }
 
     return t.importEmpty(action);
-  }, [editorNotice, t]);
+  }, [toastNotice, t]);
 
   const canStart = !isRolling && targetItems.length > 0;
 
@@ -138,13 +151,22 @@ const App = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isHelpOpen]);
 
+  useEffect(() => {
+    if (!toastNotice) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => setToastNotice(null), 4000);
+    return () => window.clearTimeout(timer);
+  }, [toastNotice]);
+
   const handlePasteImport = (mode: PasteImportMode) => {
     if (!pasteText) {
       return;
     }
 
     const { added, duplicates } = addItemsFromText(pasteText, mode);
-    setEditorNotice({ mode, added, duplicates });
+    setToastNotice({ id: Date.now(), type: 'import', mode, added, duplicates });
 
     setPasteText(null);
     setIsEditorVisible(true);
@@ -152,7 +174,7 @@ const App = () => {
 
   const handleSlotSelect = (id: string) => {
     selectSlot(id);
-    setEditorNotice(null);
+    setToastNotice(null);
   };
 
   return (
@@ -242,11 +264,11 @@ const App = () => {
           <ItemEditor
             key={activeSlotId}
             items={items}
-            notice={editorNoticeText}
             onAddEmpty={addEmptyItem}
             onTextChange={updateItemText}
             onStatusChange={updateStatus}
             onRemove={removeItem}
+            onEditError={(reason) => setToastNotice({ id: Date.now(), type: 'edit-error', reason })}
             t={t}
           />
         )}
@@ -265,6 +287,12 @@ const App = () => {
           {t.issueLink}
         </a>
       </footer>
+
+      {toastText && (
+        <div className="toast-notice" role="status" aria-live="polite">
+          {toastText}
+        </div>
+      )}
 
       {isHelpOpen && (
         <div className="dialog-backdrop" role="presentation" onClick={() => setIsHelpOpen(false)}>

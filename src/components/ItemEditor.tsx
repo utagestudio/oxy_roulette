@@ -10,11 +10,11 @@ const FILTER_ORDER: ItemFilter[] = ['all', ...STATUS_ORDER];
 
 interface ItemEditorProps {
   items: Item[];
-  notice: string | null;
   onAddEmpty: () => string;
   onTextChange: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   onStatusChange: (id: string, status: Status) => void;
   onRemove: (id: string) => void;
+  onEditError: (reason: EditNotice) => void;
   t: Translation;
 }
 
@@ -31,9 +31,8 @@ const FILTER_ICON: Record<ItemFilter, string> = {
   done: STATUS_ICON.done,
 };
 
-export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusChange, onRemove, t }: ItemEditorProps) => {
+export const ItemEditor = ({ items, onAddEmpty, onTextChange, onStatusChange, onRemove, onEditError, t }: ItemEditorProps) => {
   const [drafts, setDrafts] = useState<Record<string, string>>({});
-  const [editNotice, setEditNotice] = useState<EditNotice | null>(null);
   const [focusItemId, setFocusItemId] = useState<string | null>(null);
   const [itemFilter, setItemFilter] = useState<ItemFilter>('all');
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -49,9 +48,6 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
     inactive: t.inactive,
     done: t.done,
   };
-  const editNoticeText =
-    editNotice === null ? null : editNotice === 'duplicate' ? t.duplicateTextError : t.emptyTextError;
-
   useEffect(() => {
     if (!focusItemId) {
       return;
@@ -73,12 +69,11 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
 
     if (result.updated) {
       setDrafts((prev) => ({ ...prev, [item.id]: draft.trim() }));
-      setEditNotice(null);
       return;
     }
 
     setDrafts((prev) => ({ ...prev, [item.id]: item.text }));
-    setEditNotice(result.reason === 'duplicate' ? 'duplicate' : 'empty');
+    onEditError(result.reason === 'duplicate' ? 'duplicate' : 'empty');
   };
 
   return (
@@ -110,7 +105,6 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
             const id = onAddEmpty();
             setDrafts((prev) => ({ ...prev, [id]: '' }));
             setFocusItemId(id);
-            setEditNotice(null);
           }}
           aria-label={t.addEmptyItem}
           title={t.addEmptyItem}
@@ -118,7 +112,6 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
           +
         </button>
       </div>
-      {(editNoticeText || notice) && <p className="notice">{editNoticeText ?? notice}</p>}
       <div className="item-list">
         {visibleItems.length === 0 && <p className="empty-list-message">{t.noFilteredItems}</p>}
         {visibleItems.map((item) => (
