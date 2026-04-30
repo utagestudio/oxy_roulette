@@ -40,9 +40,9 @@ Stellar Picker の作成
   - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する
 - アプリ下部には小さなフッターを表示する
   - copyright として `© 2026 UTAGE.GAMES` を表示する
-  - `UTAGE.GAMES X` は `https://x.com/utage_studio` にリンクする
-  - `UTAGE.GAMES YouTube` は `https://youtube.com/c/utagegames/` にリンクする
-  - `Issue` / `Issues` は `https://github.com/utagestudio/oxy_roulette/issues` にリンクする
+  - `X` は `https://x.com/utage_studio` にリンクする
+  - `YouTube` は `https://youtube.com/c/utagegames/` にリンクする
+  - `バグ報告・機能要望はこちら` / `Report bugs or request features` は `https://github.com/utagestudio/oxy_roulette/issues` にリンクする
 - デザインは、配信画面で視認しやすい宇宙感のある見た目にする
   - 星層や深い宇宙背景を使う
   - パネルは半透明の宇宙船UI風にする
