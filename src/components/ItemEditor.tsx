@@ -4,6 +4,9 @@ import type { Item, Status } from '../types/roulette';
 
 type ItemFilter = 'all' | Status;
 
+const STATUS_ORDER: Status[] = ['inactive', 'target', 'done'];
+const FILTER_ORDER: ItemFilter[] = ['all', ...STATUS_ORDER];
+
 interface ItemEditorProps {
   items: Item[];
   notice: string | null;
@@ -83,7 +86,7 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
           <span className="item-filter-label" aria-hidden="true" title={t.filter}>
             🔎
           </span>
-          {(Object.keys(filterLabel) as ItemFilter[]).map((filter) => (
+          {FILTER_ORDER.map((filter) => (
             <button
               key={filter}
               type="button"
@@ -140,7 +143,7 @@ export const ItemEditor = ({ items, notice, onAddEmpty, onTextChange, onStatusCh
               title={item.text}
             />
             <div className="status-buttons" role="group" aria-label={t.statusGroup}>
-              {(Object.keys(statusLabel) as Status[]).map((status) => (
+              {STATUS_ORDER.map((status) => (
                 <button
                   key={status}
                   type="button"
