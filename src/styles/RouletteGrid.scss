@@ -1,15 +1,17 @@
 .roulette-grid {
   height: 100%;
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .roulette-cell {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 6px;
+  isolation: isolate;
+  padding: 8px;
   color: #e7f5ff;
   font-size: 22px;
   font-weight: 700;
@@ -17,29 +19,58 @@
   white-space: normal;
   word-break: break-word;
   overflow-wrap: anywhere;
+  text-shadow: 0 1px 2px #020713cc;
   background:
-    linear-gradient(0deg, #142036 0%, #17233a 100%);
-  border: 1px solid #355e86;
+    radial-gradient(ellipse at 50% 35%, #213a55 0%, #101d30 70%),
+    linear-gradient(180deg, #0d1829 0%, #142238 100%);
+  border: 1px solid #243851;
+  border-top-color: #111827;
+  border-left-color: #111827;
   border-radius: 8px;
   box-shadow:
-    inset 0 1px 0 #ffffff14,
-    0 0 0 1px #07101f99;
+    inset 0 3px 8px #000b1888,
+    inset 0 -1px 0 #8ddcff22,
+    inset 0 0 0 1px #00000055;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  &::before {
+    background:
+      linear-gradient(180deg, #0000004d 0%, transparent 34%),
+      radial-gradient(ellipse at 50% 100%, #2eb6ff14 0%, transparent 58%);
+  }
+
+  &::after {
+    border-radius: inherit;
+    box-shadow:
+      inset 0 2px 0 #030916cc,
+      inset 2px 0 0 #03091699,
+      inset -1px -1px 0 #6f91b01a;
+  }
 
   &.empty {
-    color: #6e8296;
-    border-style: dashed;
-    background: #0c1322aa;
+    visibility: hidden;
   }
 
   &.active {
     color: #ffffff;
     background:
-      linear-gradient(135deg, #104d68 0%, #159fc4 52%, #2b7a55 100%);
-    border-color: #78e9ff;
+      radial-gradient(ellipse at 50% 45%, #39cbe9 0%, #177b96 46%, #143047 76%),
+      linear-gradient(180deg, #082034 0%, #10233a 100%);
+    border-color: #6bdfff;
     box-shadow:
-      0 0 0 2px #78e9ff66,
-      0 0 18px #00d4ff88,
-      0 0 34px #7dffb155;
+      inset 0 3px 8px #00263d88,
+      inset 0 0 20px #b9f8ff33,
+      0 0 0 1px #78e9ff55,
+      0 0 18px #00d4ff73,
+      0 0 34px #7dffb13d;
     animation: roulette-active-pulse 0.55s ease-in-out infinite alternate;
   }
 
@@ -47,12 +78,15 @@
     color: #fff;
     text-shadow: 0 1px 2px #2f2300;
     background:
-      linear-gradient(135deg, #426612 0%, #bd8a26 58%, #ffe171 100%);
+      radial-gradient(ellipse at 50% 45%, #f4d76e 0%, #b48634 48%, #394022 78%),
+      linear-gradient(180deg, #1c260f 0%, #2d2410 100%);
     border-color: #ffe68a;
     box-shadow:
-      0 0 0 2px #ffe68a66,
-      0 0 20px #ffe26a88,
-      0 0 36px #75ff9a44;
+      inset 0 3px 8px #3c260080,
+      inset 0 0 20px #fff2a633,
+      0 0 0 1px #ffe68a55,
+      0 0 16px #ffe26a66,
+      0 0 30px #75ff9a33;
   }
 }
 
