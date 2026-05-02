@@ -2,13 +2,35 @@ import type { Item, RouletteSlot, RouletteStorageData } from '../types/roulette'
 
 export const STORAGE_KEY = 'oni-roulette-v1';
 const SLOT_IDS = ['slot-1', 'slot-2', 'slot-3'] as const;
+const DEFAULT_DINNER_ITEMS: Item[] = [
+  { id: 'default-dinner-01', text: 'ハンバーグ', status: 'target' },
+  { id: 'default-dinner-02', text: '唐揚げ', status: 'target' },
+  { id: 'default-dinner-03', text: '生姜焼き', status: 'target' },
+  { id: 'default-dinner-04', text: '焼き鮭', status: 'target' },
+  { id: 'default-dinner-05', text: '豚キムチ', status: 'target' },
+  { id: 'default-dinner-06', text: '麻婆豆腐', status: 'target' },
+  { id: 'default-dinner-07', text: 'カレーライス', status: 'target' },
+  { id: 'default-dinner-08', text: 'オムライス', status: 'target' },
+  { id: 'default-dinner-09', text: '親子丼', status: 'target' },
+  { id: 'default-dinner-10', text: '肉じゃが', status: 'target' },
+  { id: 'default-dinner-11', text: '餃子', status: 'target' },
+  { id: 'default-dinner-12', text: 'チキン南蛮', status: 'target' },
+  { id: 'default-dinner-13', text: '鯖の味噌煮', status: 'target' },
+  { id: 'default-dinner-14', text: '回鍋肉', status: 'target' },
+  { id: 'default-dinner-15', text: '豚汁', status: 'target' },
+  { id: 'default-dinner-16', text: 'エビチリ', status: 'target' },
+  { id: 'default-dinner-17', text: '照り焼きチキン', status: 'target' },
+  { id: 'default-dinner-18', text: '天ぷら', status: 'target' },
+  { id: 'default-dinner-19', text: 'ミートソースパスタ', status: 'target' },
+  { id: 'default-dinner-20', text: '鍋料理', status: 'target' },
+];
 
 const createInitialData = (): RouletteStorageData => ({
   activeSlotId: SLOT_IDS[0],
-  slots: SLOT_IDS.map((id) => ({
+  slots: SLOT_IDS.map((id, index) => ({
     id,
     name: '',
-    items: [],
+    items: index === 0 ? DEFAULT_DINNER_ITEMS : [],
     lastResultId: null,
   })),
   updatedAt: new Date().toISOString(),
