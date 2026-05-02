@@ -47,6 +47,7 @@ Stellar Picker の作成
 - ヘッダーから使い方モーダルを開けるようにする
   - モーダルには、メモ帳などで 1 行 1 項目のやることリストを書き出す手順と、`Ctrl+C` / `Ctrl+V` で貼り付ける手順、対象設定、抽選、確定の基本手順を表示する
   - モーダルには `+` 追加、状態切り替え、抽選済みフィルタ、タブ名変更のヒントを表示する
+  - モーダル内に初期状態へ戻すリンクを表示し、クリック後の確認ダイアログでOKされた場合のみ保存済みデータを削除して初期化する
   - 表示内容は日本語/英語の切り替えに対応する
 - 一般公開向けに、`index.html` の `head` には title / description / OGP / Twitter Card / theme color / favicon などの基本メタ情報を設定する
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する

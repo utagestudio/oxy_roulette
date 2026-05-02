@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Item, RouletteSlot, Status } from '../types/roulette';
-import { loadStorage, saveStorage } from '../utils/storage';
+import { clearStorage, createInitialData, loadStorage, saveStorage } from '../utils/storage';
 import {
   createRouletteIntervals,
   getRandomInt,
@@ -27,6 +27,7 @@ interface UseRouletteResult {
   updateItemText: (id: string, text: string) => { updated: boolean; reason?: 'empty' | 'duplicate' };
   updateStatus: (id: string, status: Status) => void;
   removeItem: (id: string) => void;
+  reset: () => void;
   start: () => void;
   accept: () => void;
 }
@@ -173,6 +174,21 @@ export const useRoulette = (): UseRouletteResult => {
     }
   };
 
+  const reset = (): void => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+
+    const initialData = createInitialData();
+    clearStorage();
+    setSlots(initialData.slots);
+    setActiveSlotId(initialData.activeSlotId);
+    setFocusedId(null);
+    setIsRolling(false);
+    targetIdsRef.current = [];
+  };
+
   const start = (): void => {
     if (isRolling || targetItems.length === 0) {
       return;
@@ -243,6 +259,7 @@ export const useRoulette = (): UseRouletteResult => {
     updateItemText,
     updateStatus,
     removeItem,
+    reset,
     start,
     accept,
   };

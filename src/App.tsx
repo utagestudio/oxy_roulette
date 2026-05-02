@@ -47,6 +47,7 @@ const App = () => {
     activeSlotId,
     selectSlot,
     renameSlot,
+    reset,
   } = useRoulette();
 
   const [isEditorVisible, setIsEditorVisible] = useState(true);
@@ -184,6 +185,20 @@ const App = () => {
     setToastNotice(null);
   };
 
+  const handleResetData = () => {
+    if (!window.confirm(t.resetConfirm)) {
+      return;
+    }
+
+    window.localStorage.removeItem(LOCALE_STORAGE_KEY);
+    reset();
+    setLocale('ja');
+    setPasteText(null);
+    setToastNotice(null);
+    setIsHelpOpen(false);
+    setIsEditorVisible(true);
+  };
+
   return (
     <main className="app-root">
       <AppHeader
@@ -234,7 +249,7 @@ const App = () => {
 
       {toastText && <ToastNotice message={toastText} />}
 
-      {isHelpOpen && <HelpDialog onClose={() => setIsHelpOpen(false)} t={t} />}
+      {isHelpOpen && <HelpDialog onClose={() => setIsHelpOpen(false)} onResetData={handleResetData} t={t} />}
 
       {pasteText && (
         <PasteImportDialog

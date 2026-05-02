@@ -52,3 +52,27 @@
     margin-top: 6px;
   }
 }
+
+.help-reset {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #6f91b033;
+  text-align: right;
+}
+
+.help-reset-button {
+  padding: 0;
+  color: #b9dcff;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover:not(:disabled) {
+    color: #ffffff;
+    background: transparent;
+    box-shadow: none;
+  }
+}

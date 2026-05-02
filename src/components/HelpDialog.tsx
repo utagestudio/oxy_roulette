@@ -3,10 +3,11 @@ import '../styles/HelpDialog.scss';
 
 interface HelpDialogProps {
   onClose: () => void;
+  onResetData: () => void;
   t: Translation;
 }
 
-export const HelpDialog = ({ onClose, t }: HelpDialogProps) => (
+export const HelpDialog = ({ onClose, onResetData, t }: HelpDialogProps) => (
   <div className="dialog-backdrop" role="presentation" onClick={onClose}>
     <section
       className="help-dialog"
@@ -33,6 +34,11 @@ export const HelpDialog = ({ onClose, t }: HelpDialogProps) => (
           <li key={tip}>{tip}</li>
         ))}
       </ul>
+      <div className="help-reset">
+        <button type="button" className="help-reset-button" onClick={onResetData}>
+          {t.resetData}
+        </button>
+      </div>
     </section>
   </div>
 );

@@ -25,7 +25,7 @@ const DEFAULT_DINNER_ITEMS: Item[] = [
   { id: 'default-dinner-20', text: '鍋料理', status: 'target' },
 ];
 
-const createInitialData = (): RouletteStorageData => ({
+export const createInitialData = (): RouletteStorageData => ({
   activeSlotId: SLOT_IDS[0],
   slots: SLOT_IDS.map((id, index) => ({
     id,
@@ -159,4 +159,8 @@ export const saveStorage = (data: Omit<RouletteStorageData, 'updatedAt'>): void 
     updatedAt: new Date().toISOString(),
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+};
+
+export const clearStorage = (): void => {
+  localStorage.removeItem(STORAGE_KEY);
 };
