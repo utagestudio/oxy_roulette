@@ -57,9 +57,12 @@
   margin-top: 18px;
   padding-top: 12px;
   border-top: 1px solid #6f91b033;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
 }
 
+.help-link-button,
 .help-reset-button {
   padding: 0;
   color: #b9dcff;

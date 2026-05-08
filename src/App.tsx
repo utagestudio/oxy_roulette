@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AppFooter } from './components/AppFooter';
 import { AppHeader } from './components/AppHeader';
+import { ConsentBanner } from './components/ConsentBanner';
 import { Controls } from './components/Controls';
 import { HelpDialog } from './components/HelpDialog';
 import { ItemEditor } from './components/ItemEditor';
@@ -10,6 +11,14 @@ import { RouletteGrid } from './components/RouletteGrid';
 import { ToastNotice } from './components/ToastNotice';
 import { useRoulette } from './hooks/useRoulette';
 import { isLocale, LOCALE_STORAGE_KEY, type Locale, translations } from './i18n';
+import {
+  clearTrackingConsent,
+  getGoogleTagManagerId,
+  loadGoogleTagManager,
+  loadTrackingConsent,
+  saveTrackingConsent,
+  type TrackingConsent,
+} from './utils/googleTagManager';
 import './styles/app.scss';
 
 type PasteImportMode = 'append' | 'replace';
@@ -58,6 +67,8 @@ const App = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
   const [toastNotice, setToastNotice] = useState<ToastNotice | null>(null);
+  const [trackingConsent, setTrackingConsent] = useState<TrackingConsent>(() => loadTrackingConsent());
+  const googleTagManagerId = useMemo(() => getGoogleTagManagerId(), []);
   const t = translations[locale];
 
   const targetItems = items.filter((item) => item.status === 'target' && item.text.trim().length > 0);
@@ -103,12 +114,19 @@ const App = () => {
   }, [toastNotice, t]);
 
   const canStart = !isRolling && targetItems.length > 0;
+  const shouldShowConsentBanner = googleTagManagerId.length > 0 && trackingConsent === 'unknown';
 
   useEffect(() => {
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
     document.documentElement.lang = locale;
     document.title = t.appTitle;
   }, [locale, t.appTitle]);
+
+  useEffect(() => {
+    if (googleTagManagerId && trackingConsent === 'granted') {
+      loadGoogleTagManager(googleTagManagerId);
+    }
+  }, [googleTagManagerId, trackingConsent]);
 
   useEffect(() => {
     const handlePaste = (event: ClipboardEvent) => {
@@ -191,12 +209,36 @@ const App = () => {
     }
 
     window.localStorage.removeItem(LOCALE_STORAGE_KEY);
+    clearTrackingConsent();
     reset();
     setLocale('ja');
+    setTrackingConsent('unknown');
     setPasteText(null);
     setToastNotice(null);
     setIsHelpOpen(false);
     setIsEditorVisible(true);
+  };
+
+  const handleAcceptTracking = () => {
+    saveTrackingConsent('granted');
+    setTrackingConsent('granted');
+  };
+
+  const handleRejectTracking = () => {
+    saveTrackingConsent('denied');
+
+    if (trackingConsent === 'granted' || document.getElementById('google-tag-manager-script')) {
+      window.location.reload();
+      return;
+    }
+
+    setTrackingConsent('denied');
+  };
+
+  const handleChangePrivacySettings = () => {
+    clearTrackingConsent();
+    setTrackingConsent('unknown');
+    setIsHelpOpen(false);
   };
 
   return (
@@ -249,7 +291,19 @@ const App = () => {
 
       {toastText && <ToastNotice message={toastText} />}
 
-      {isHelpOpen && <HelpDialog onClose={() => setIsHelpOpen(false)} onResetData={handleResetData} t={t} />}
+      {shouldShowConsentBanner && (
+        <ConsentBanner onAccept={handleAcceptTracking} onReject={handleRejectTracking} t={t} />
+      )}
+
+      {isHelpOpen && (
+        <HelpDialog
+          onClose={() => setIsHelpOpen(false)}
+          onResetData={handleResetData}
+          onChangePrivacySettings={handleChangePrivacySettings}
+          canChangePrivacySettings={googleTagManagerId.length > 0}
+          t={t}
+        />
+      )}
 
       {pasteText && (
         <PasteImportDialog

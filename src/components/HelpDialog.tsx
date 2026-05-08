@@ -4,10 +4,18 @@ import '../styles/HelpDialog.scss';
 interface HelpDialogProps {
   onClose: () => void;
   onResetData: () => void;
+  onChangePrivacySettings: () => void;
+  canChangePrivacySettings: boolean;
   t: Translation;
 }
 
-export const HelpDialog = ({ onClose, onResetData, t }: HelpDialogProps) => (
+export const HelpDialog = ({
+  onClose,
+  onResetData,
+  onChangePrivacySettings,
+  canChangePrivacySettings,
+  t,
+}: HelpDialogProps) => (
   <div className="dialog-backdrop" role="presentation" onClick={onClose}>
     <section
       className="help-dialog"
@@ -35,6 +43,11 @@ export const HelpDialog = ({ onClose, onResetData, t }: HelpDialogProps) => (
         ))}
       </ul>
       <div className="help-reset">
+        {canChangePrivacySettings && (
+          <button type="button" className="help-link-button" onClick={onChangePrivacySettings}>
+            {t.changePrivacySettings}
+          </button>
+        )}
         <button type="button" className="help-reset-button" onClick={onResetData}>
           {t.resetData}
         </button>
