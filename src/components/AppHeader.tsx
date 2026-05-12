@@ -81,7 +81,7 @@ export const AppHeader = ({
   return (
     <header className="app-header">
       <h1>
-        <img className="app-logo" src="/logo.png" alt="Stellar Picker" />
+        <img className="app-logo" src="/logo.png" alt={t.logoAlt} />
       </h1>
       <nav className="roulette-tabs" aria-label={t.rouletteTabs}>
         {slots.map((slot, index) => {

@@ -1,0 +1,22 @@
+# Stellar Picker
+
+Stellar Picker is a free online roulette picker tool for drawing a random item from a customizable list.
+
+## Japanese summary
+
+Stellar Picker は、配信や作業のやることリストからランダム抽選できる無料のオンラインルーレットツールです。円形ルーレットではなく、リストをグリッド表示してハイライト演出で抽選結果を見せます。
+
+## Primary use cases
+
+- オンラインルーレット
+- ランダム抽選
+- リスト抽選
+- 配信用ルーレット
+- やることリストの抽選
+- Task roulette
+- Random picker
+- Stream roulette tool
+
+## URL
+
+https://stellar-picker.utage.games/

@@ -53,6 +53,8 @@ Stellar Picker の作成
   - 公開URLは `https://stellar-picker.utage.games/` とし、canonical / OGP URL に反映する
   - OGP画像は `public/ogp.png` を使用し、`og:image` / `twitter:image` に絶対URLで指定する
   - favicon は OGP 画像内の `Stellar Picker` ロゴ先頭の `S` を切り出した `public/favicon.png` を使用する
+  - 検索・SNS・AI検索向けに、`ルーレット`、`抽選`、`ランダム抽選`、`オンラインルーレット` が自然に含まれる title / description / OGP / Twitter Card / JSON-LD / `llms.txt` を設定する
+  - `public/robots.txt` と `public/sitemap.xml` で公開URLをクロール対象として明示する
 - Google Tag Manager は `.env` やホスティング環境変数の `VITE_GTM_ID=GTM-...` が設定されている場合のみ有効化する
   - 初回は同意バナーを表示し、同意されるまでGTMスクリプトを読み込まない
   - 拒否された場合は同意状態を保存し、GTMスクリプトを読み込まない

@@ -6,7 +6,8 @@ export const isLocale = (value: string | null): value is Locale => value === 'ja
 
 export const translations = {
   ja: {
-    appTitle: 'Stellar Picker',
+    appTitle: '無料ルーレット抽選ツール | Stellar Picker',
+    logoAlt: 'Stellar Picker - ルーレット抽選ツール',
     openHelp: '使い方を表示',
     closeHelp: '使い方を閉じる',
     helpTitle: '使い方',
@@ -78,7 +79,8 @@ export const translations = {
     emptyTextError: '空の項目名は登録できません。',
   },
   en: {
-    appTitle: 'Stellar Picker',
+    appTitle: 'Roulette Picker Tool | Stellar Picker',
+    logoAlt: 'Stellar Picker - Roulette Picker Tool',
     openHelp: 'Show help',
     closeHelp: 'Close help',
     helpTitle: 'How to use',
