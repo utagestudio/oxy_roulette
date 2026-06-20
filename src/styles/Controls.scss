@@ -36,3 +36,39 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .controls {
+    min-height: 122px;
+  }
+
+  .control-button {
+    min-height: 96px;
+    font-size: 16px;
+
+    span {
+      &:first-child {
+        font-size: 32px;
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .controls {
+    min-height: 108px;
+  }
+
+  .control-button {
+    min-height: 82px;
+    padding: 10px 8px;
+    gap: 8px;
+    font-size: 15px;
+
+    span {
+      &:first-child {
+        font-size: 28px;
+      }
+    }
+  }
+}

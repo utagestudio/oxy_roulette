@@ -79,3 +79,20 @@
     box-shadow: none;
   }
 }
+
+@media (max-width: 520px) {
+  .help-dialog {
+    width: 100%;
+    padding: 14px;
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  .help-reset {
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

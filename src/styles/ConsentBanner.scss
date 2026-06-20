@@ -57,3 +57,20 @@
     background: linear-gradient(180deg, #1d2b3e 0%, #111a2b 100%);
   }
 }
+
+@media (max-width: 640px) {
+  .consent-banner {
+    right: 10px;
+    bottom: 10px;
+    width: calc(100vw - 20px);
+    grid-template-columns: 1fr;
+  }
+
+  .consent-banner-actions {
+    justify-content: stretch;
+  }
+
+  .consent-button {
+    flex: 1;
+  }
+}

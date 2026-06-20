@@ -28,3 +28,23 @@
     visibility: hidden;
   }
 }
+
+@media (max-width: 900px) {
+  .result-display {
+    min-height: 118px;
+
+    p {
+      font-size: 34px;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .result-display {
+    min-height: 104px;
+
+    p {
+      font-size: 28px;
+    }
+  }
+}

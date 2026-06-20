@@ -156,3 +156,45 @@
       0 0 12px #00d4ff44;
   }
 }
+
+@media (max-width: 900px) {
+  .item-editor {
+    min-height: 320px;
+  }
+
+  .item-list {
+    max-height: 520px;
+  }
+}
+
+@media (max-width: 520px) {
+  .item-editor-header {
+    align-items: stretch;
+    flex-wrap: wrap;
+
+    h2 {
+      flex-basis: 100%;
+    }
+  }
+
+  .item-filter-tabs {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .item-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+  }
+
+  .item-text-input {
+    grid-column: 1 / -1;
+    height: 38px;
+  }
+
+  .status-button,
+  .remove-button {
+    width: 36px;
+    height: 36px;
+  }
+}
