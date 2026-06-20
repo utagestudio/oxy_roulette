@@ -44,6 +44,8 @@ npm install
 npm run dev
 ```
 
+`npm run dev` は `0.0.0.0` に bind するため、同一ネットワーク内の他PCやスマートフォンからもアクセスできます。起動時に表示される `Network` URL、または開発機のIPアドレスとポートを使って開いてください。
+
 Production build:
 
 ```bash

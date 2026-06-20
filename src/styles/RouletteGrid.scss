@@ -114,3 +114,26 @@
     filter: brightness(1.15);
   }
 }
+
+@media (max-width: 900px) {
+  .roulette-grid {
+    gap: 8px;
+  }
+
+  .roulette-cell {
+    padding: 6px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .roulette-grid {
+    gap: 6px;
+  }
+
+  .roulette-cell {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 7px;
+  }
+}
