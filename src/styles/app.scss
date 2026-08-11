@@ -40,6 +40,10 @@
   --footer-text: #526c84;
   --footer-link: #0e6f9f;
   --footer-link-hover: #073c61;
+  --logo-plate-bg: linear-gradient(90deg, #0d2942d9 0%, #144a6dcc 100%);
+  --logo-plate-border: #ffffff99;
+  --logo-plate-shadow: 0 8px 20px #477c9a38, inset 0 1px 0 #ffffff4d;
+  --logo-filter: drop-shadow(0 1px 0 #001d31) drop-shadow(0 0 8px #ffffff80);
   --body-background:
     radial-gradient(circle at 18% 22%, #4fb6e0 0 1px, transparent 2px),
     radial-gradient(circle at 74% 18%, #ffe28d 0 1px, transparent 2px),
@@ -144,6 +148,10 @@
   --footer-text: #9fb7ca;
   --footer-link: #c7eaff;
   --footer-link-hover: #ffffff;
+  --logo-plate-bg: transparent;
+  --logo-plate-border: transparent;
+  --logo-plate-shadow: none;
+  --logo-filter: drop-shadow(0 0 8px #6ed6ff45);
   --body-background:
     radial-gradient(circle at 18% 22%, #244a7a 0 1px, transparent 2px),
     radial-gradient(circle at 74% 18%, #f7db8a 0 1px, transparent 2px),

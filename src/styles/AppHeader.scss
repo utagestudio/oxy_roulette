@@ -5,9 +5,22 @@
   gap: 12px;
 
   h1 {
+    position: relative;
     margin: 0;
     display: flex;
     align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -4px -8px;
+      z-index: -1;
+      border: 1px solid var(--logo-plate-border);
+      border-radius: 8px;
+      background: var(--logo-plate-bg);
+      box-shadow: var(--logo-plate-shadow);
+      pointer-events: none;
+    }
   }
 }
 
@@ -16,6 +29,7 @@
   width: auto;
   height: 32px;
   object-fit: contain;
+  filter: var(--logo-filter);
 }
 
 .roulette-tabs {
