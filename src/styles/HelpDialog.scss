@@ -1,10 +1,10 @@
 .help-dialog {
   width: min(680px, calc(100vw - 48px));
   padding: 18px;
-  background: linear-gradient(180deg, #17233d 0%, #0d1325 100%);
-  border: 1px solid #81b8ff;
+  background: var(--dialog-bg);
+  border: 1px solid var(--result-border);
   border-radius: 10px;
-  box-shadow: 0 20px 48px #00000088;
+  box-shadow: var(--dialog-shadow);
 
   h2 {
     margin: 0 0 10px;
@@ -13,7 +13,7 @@
 
   h3 {
     margin: 18px 0 8px;
-    color: #ffeaa2;
+    color: var(--gold);
     font-size: 17px;
   }
 }
@@ -38,14 +38,14 @@
 
 .help-intro {
   margin: 0 0 14px;
-  color: #d9f3ff;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
 .help-list {
   margin: 0;
   padding-left: 24px;
-  color: #f7fbff;
+  color: var(--text-primary);
   line-height: 1.7;
 
   li + li {
@@ -56,7 +56,7 @@
 .help-reset {
   margin-top: 18px;
   padding-top: 12px;
-  border-top: 1px solid #6f91b033;
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   justify-content: flex-end;
   gap: 16px;
@@ -65,7 +65,7 @@
 .help-link-button,
 .help-reset-button {
   padding: 0;
-  color: #b9dcff;
+  color: var(--footer-link);
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -74,7 +74,7 @@
   text-underline-offset: 3px;
 
   &:hover:not(:disabled) {
-    color: #ffffff;
+    color: var(--footer-link-hover);
     background: transparent;
     box-shadow: none;
   }

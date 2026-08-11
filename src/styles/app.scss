@@ -1,13 +1,218 @@
 :root {
   font-family: 'Segoe UI', sans-serif;
-  color: #f7fbff;
-  background: #050812;
+  color: var(--text-primary);
+  background: var(--page-bg);
+  --page-bg: #f5fbff;
+  --text-primary: #142337;
+  --text-secondary: #41566e;
+  --text-muted: #70849a;
+  --text-inverse: #ffffff;
+  --heading-color: #1e5c85;
+  --accent: #147fb3;
+  --accent-strong: #006fa8;
+  --accent-soft: #d7f1ff;
+  --accent-glow: #51bde655;
+  --gold: #986f00;
+  --gold-soft: #fff3bf;
+  --danger: #b2414d;
+  --danger-surface: #ffe7eb;
+  --border-subtle: #b6d4e7;
+  --border-strong: #6baed1;
+  --control-bg: linear-gradient(180deg, #ffffff 0%, #dff2ff 100%);
+  --control-bg-hover: linear-gradient(180deg, #ffffff 0%, #c9eaff 100%);
+  --control-border: #7fb8d4;
+  --control-text: #142337;
+  --control-shadow: inset 0 1px 0 #ffffffcc, 0 6px 18px #6da8c72e;
+  --control-hover-shadow: inset 0 1px 0 #ffffff, 0 0 0 2px #62c4ef26, 0 8px 22px #45a7d43b;
+  --segmented-bg: #ffffffb8;
+  --segmented-border: #a7cfe4;
+  --active-bg: #c6efff;
+  --active-border: #2498c4;
+  --active-shadow: 0 0 0 2px #69cbef33, 0 0 14px #38aee647;
+  --panel-bg: linear-gradient(180deg, #ffffffd9 0%, #eaf7ffe8 100%);
+  --panel-border: #9bc8df;
+  --panel-shadow: inset 0 1px 0 #ffffff, 0 0 0 1px #ffffffa8, 0 14px 32px #91b6cf3d;
+  --input-bg: #ffffffdb;
+  --input-border: #a7cfe4;
+  --dialog-bg: linear-gradient(180deg, #ffffff 0%, #eaf7ff 100%);
+  --dialog-shadow: 0 20px 48px #6d879f4d;
+  --backdrop-bg: #d8ebf2b5;
+  --footer-text: #526c84;
+  --footer-link: #0e6f9f;
+  --footer-link-hover: #073c61;
+  --body-background:
+    radial-gradient(circle at 18% 22%, #4fb6e0 0 1px, transparent 2px),
+    radial-gradient(circle at 74% 18%, #ffe28d 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 70%, #78d9c4 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 78%, #7c9fb7 0 1px, transparent 2px),
+    linear-gradient(135deg, #f8fcff 0%, #eaf6ff 48%, #f6f1ff 100%);
+  --body-background-size: 190px 150px, 240px 210px, 310px 260px, 420px 300px, 100% 100%;
+  --app-overlay:
+    linear-gradient(90deg, #147fb30d 1px, transparent 1px),
+    linear-gradient(#147fb309 1px, transparent 1px),
+    radial-gradient(ellipse at 22% 28%, #9be2ff4d 0%, transparent 40%),
+    radial-gradient(ellipse at 78% 72%, #ffd47a47 0%, transparent 36%);
+  --app-overlay-size: 80px 80px, 80px 80px, 100% 100%, 100% 100%;
+  --cell-text: #12304a;
+  --cell-text-shadow: 0 1px 0 #ffffffcc;
+  --cell-bg:
+    radial-gradient(ellipse at 50% 35%, #ffffff 0%, #d9eefb 70%),
+    linear-gradient(180deg, #eef8ff 0%, #d8edf9 100%);
+  --cell-border: #9fc8df;
+  --cell-border-top: #c7e2f1;
+  --cell-border-left: #c7e2f1;
+  --cell-shadow: inset 0 2px 8px #ffffffcc, inset 0 -1px 0 #6bb2d444, inset 0 0 0 1px #ffffffa8;
+  --cell-before:
+    linear-gradient(180deg, #ffffff99 0%, transparent 34%),
+    radial-gradient(ellipse at 50% 100%, #28a7d91c 0%, transparent 58%);
+  --cell-after-shadow: inset 0 2px 0 #ffffffcc, inset 2px 0 0 #ffffff99, inset -1px -1px 0 #317ba024;
+  --cell-active-text: #ffffff;
+  --cell-active-bg:
+    radial-gradient(ellipse at 50% 45%, #4ed8ff 0%, #0f91c5 48%, #08709b 78%),
+    linear-gradient(180deg, #1aa8d5 0%, #08709b 100%);
+  --cell-active-border: #0089bd;
+  --cell-active-shadow:
+    inset 0 3px 8px #005c7d55,
+    inset 0 0 20px #ffffff4d,
+    0 0 0 1px #ffffff99,
+    0 0 18px #19aeea8a,
+    0 0 34px #2ed6a745;
+  --cell-won-text: #ffffff;
+  --cell-won-text-shadow: 0 1px 2px #4d3300;
+  --cell-won-bg:
+    radial-gradient(ellipse at 50% 45%, #ffe88f 0%, #d9a22c 52%, #a46a12 84%),
+    linear-gradient(180deg, #c1851e 0%, #8a5b14 100%);
+  --cell-won-border: #c88713;
+  --cell-won-shadow:
+    inset 0 3px 8px #6f460055,
+    inset 0 0 20px #fff2a666,
+    0 0 0 1px #fff3bf99,
+    0 0 16px #f1b52a7a,
+    0 0 30px #d99a3940;
+  --cell-won-before:
+    linear-gradient(180deg, #fff1ac4d 0%, transparent 34%),
+    radial-gradient(ellipse at 50% 100%, #ffd45a33 0%, transparent 58%);
+  --cell-won-after-shadow: inset 0 2px 0 #fff3bf99, inset 2px 0 0 #ffffff55, inset -1px -1px 0 #7b4d0d33;
+  --result-bg: linear-gradient(135deg, #ffffff 0%, #d9f2ff 58%, #fff0bd 100%);
+  --result-border: #73b7db;
+  --result-shadow: inset 0 1px 0 #ffffff, 0 0 22px #61bde040, 0 12px 30px #92b2c64d;
+  --result-text: #8d6500;
+  --result-text-shadow: 0 0 10px #fff1a9, 0 0 22px #ffc85a66;
+  --toast-text: #553d00;
+  --toast-bg: linear-gradient(180deg, #fff7d9f2 0%, #fff0ba 100%);
+  --toast-border: #d2a32f;
+  --toast-shadow: inset 0 1px 0 #ffffff, 0 0 18px #f3c55666, 0 14px 32px #7790a04d;
+  --toast-text-shadow: 0 1px 0 #ffffffcc;
+}
+
+:root[data-theme='dark'] {
+  --page-bg: #050812;
+  --text-primary: #f7fbff;
+  --text-secondary: #d9f3ff;
+  --text-muted: #8fa9bf;
+  --text-inverse: #ffffff;
+  --heading-color: #d9f3ff;
+  --accent: #78e9ff;
+  --accent-strong: #8ddcff;
+  --accent-soft: #00d4ff33;
+  --accent-glow: #00d4ff55;
+  --gold: #ffeaa2;
+  --gold-soft: #ffeaa2;
+  --danger: #855454;
+  --danger-surface: #79313c;
+  --border-subtle: #355e86;
+  --border-strong: #7bbdff;
+  --control-bg: linear-gradient(180deg, #203955 0%, #14233a 100%);
+  --control-bg-hover: linear-gradient(180deg, #2c5075 0%, #173655 100%);
+  --control-border: #5b84ad;
+  --control-text: #f7fbff;
+  --control-shadow: inset 0 1px 0 #ffffff20, 0 0 12px #2f9dff22;
+  --control-hover-shadow: inset 0 1px 0 #ffffff28, 0 0 16px #2f9dff55;
+  --segmented-bg: #0a1220aa;
+  --segmented-border: #355e86;
+  --active-bg: #00d4ff33;
+  --active-border: #78e9ff;
+  --active-shadow: 0 0 12px #00d4ff55;
+  --panel-bg: linear-gradient(180deg, #15233dcc 0%, #0d1325e6 100%);
+  --panel-border: #426f9d;
+  --panel-shadow: inset 0 1px 0 #ffffff1c, 0 0 0 1px #07101fcc, 0 12px 30px #00000055;
+  --input-bg: #0a1220cc;
+  --input-border: #355e86;
+  --dialog-bg: linear-gradient(180deg, #17233d 0%, #0d1325 100%);
+  --dialog-shadow: 0 20px 48px #00000088;
+  --backdrop-bg: #020713cc;
+  --footer-text: #9fb7ca;
+  --footer-link: #c7eaff;
+  --footer-link-hover: #ffffff;
+  --body-background:
+    radial-gradient(circle at 18% 22%, #244a7a 0 1px, transparent 2px),
+    radial-gradient(circle at 74% 18%, #f7db8a 0 1px, transparent 2px),
+    radial-gradient(circle at 40% 70%, #8ce6d1 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 78%, #ffffff 0 1px, transparent 2px),
+    linear-gradient(135deg, #050812 0%, #0b1730 42%, #160f2c 100%);
+  --body-background-size: 190px 150px, 240px 210px, 310px 260px, 420px 300px, 100% 100%;
+  --app-overlay:
+    linear-gradient(90deg, #6ed6ff16 1px, transparent 1px),
+    linear-gradient(#6ed6ff10 1px, transparent 1px),
+    radial-gradient(ellipse at 24% 30%, #2467b844 0%, transparent 38%),
+    radial-gradient(ellipse at 78% 74%, #b86b2440 0%, transparent 36%);
+  --app-overlay-size: 80px 80px, 80px 80px, 100% 100%, 100% 100%;
+  --cell-text: #e7f5ff;
+  --cell-text-shadow: 0 1px 2px #020713cc;
+  --cell-bg:
+    radial-gradient(ellipse at 50% 35%, #213a55 0%, #101d30 70%),
+    linear-gradient(180deg, #0d1829 0%, #142238 100%);
+  --cell-border: #243851;
+  --cell-border-top: #111827;
+  --cell-border-left: #111827;
+  --cell-shadow: inset 0 3px 8px #000b1888, inset 0 -1px 0 #8ddcff22, inset 0 0 0 1px #00000055;
+  --cell-before:
+    linear-gradient(180deg, #0000004d 0%, transparent 34%),
+    radial-gradient(ellipse at 50% 100%, #2eb6ff14 0%, transparent 58%);
+  --cell-after-shadow: inset 0 2px 0 #030916cc, inset 2px 0 0 #03091699, inset -1px -1px 0 #6f91b01a;
+  --cell-active-text: #ffffff;
+  --cell-active-bg:
+    radial-gradient(ellipse at 50% 45%, #39cbe9 0%, #177b96 46%, #143047 76%),
+    linear-gradient(180deg, #082034 0%, #10233a 100%);
+  --cell-active-border: #6bdfff;
+  --cell-active-shadow:
+    inset 0 3px 8px #00263d88,
+    inset 0 0 20px #b9f8ff33,
+    0 0 0 1px #78e9ff55,
+    0 0 18px #00d4ff73,
+    0 0 34px #7dffb13d;
+  --cell-won-text: #fff;
+  --cell-won-text-shadow: 0 1px 2px #2f2300;
+  --cell-won-bg:
+    radial-gradient(ellipse at 50% 45%, #ffe178 0%, #d9a83d 50%, #9c6b24 82%),
+    linear-gradient(180deg, #6d4a18 0%, #503411 100%);
+  --cell-won-border: #ffe68a;
+  --cell-won-shadow:
+    inset 0 3px 8px #3c260080,
+    inset 0 0 20px #fff2a633,
+    0 0 0 1px #ffe68a55,
+    0 0 16px #ffe26a66,
+    0 0 30px #d99a3933;
+  --cell-won-before:
+    linear-gradient(180deg, #6a480f34 0%, transparent 34%),
+    radial-gradient(ellipse at 50% 100%, #ffd45a26 0%, transparent 58%);
+  --cell-won-after-shadow: inset 0 2px 0 #412b07cc, inset 2px 0 0 #412b0799, inset -1px -1px 0 #ffe68a2e;
+  --result-bg: linear-gradient(135deg, #132446 0%, #29224a 56%, #46311a 100%);
+  --result-border: #81b8ff;
+  --result-shadow: inset 0 1px 0 #ffffff24, 0 0 22px #3aa8ff3d, 0 12px 30px #00000066;
+  --result-text: #ffeaa2;
+  --result-text-shadow: 0 0 10px #ffe26a99, 0 0 22px #ff9b4a66;
+  --toast-text: #fff7c7;
+  --toast-bg: linear-gradient(180deg, #24395dcc 0%, #121b31ee 100%);
+  --toast-border: #ffd66f;
+  --toast-shadow: inset 0 1px 0 #ffffff24, 0 0 18px #ffcf5a66, 0 14px 32px #00000088;
+  --toast-text-shadow: 0 0 8px #ffcf5a55;
 }
 
 html {
   width: 100%;
   min-height: 100%;
-  background: #050812;
+  background: var(--page-bg);
 }
 
 * {
@@ -20,18 +225,9 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background:
-    radial-gradient(circle at 18% 22%, #244a7a 0 1px, transparent 2px),
-    radial-gradient(circle at 74% 18%, #f7db8a 0 1px, transparent 2px),
-    radial-gradient(circle at 40% 70%, #8ce6d1 0 1px, transparent 2px),
-    radial-gradient(circle at 82% 78%, #ffffff 0 1px, transparent 2px),
-    linear-gradient(135deg, #050812 0%, #0b1730 42%, #160f2c 100%);
-  background-size:
-    190px 150px,
-    240px 210px,
-    310px 260px,
-    420px 300px,
-    100% 100%;
+  color: var(--text-primary);
+  background: var(--body-background);
+  background-size: var(--body-background-size);
 }
 
 #root {
@@ -45,22 +241,18 @@ input {
 }
 
 button {
-  border: 1px solid #5b84ad;
+  border: 1px solid var(--control-border);
   border-radius: 8px;
   padding: 8px 14px;
-  background: linear-gradient(180deg, #203955 0%, #14233a 100%);
-  color: #f7fbff;
+  background: var(--control-bg);
+  color: var(--control-text);
   cursor: pointer;
-  box-shadow:
-    inset 0 1px 0 #ffffff20,
-    0 0 12px #2f9dff22;
+  box-shadow: var(--control-shadow);
 
   &:hover:not(:disabled) {
-    border-color: #8ddcff;
-    background: linear-gradient(180deg, #2c5075 0%, #173655 100%);
-    box-shadow:
-      inset 0 1px 0 #ffffff28,
-      0 0 16px #2f9dff55;
+    border-color: var(--accent-strong);
+    background: var(--control-bg-hover);
+    box-shadow: var(--control-hover-shadow);
   }
 
   &:disabled {
@@ -84,16 +276,8 @@ button {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background:
-      linear-gradient(90deg, #6ed6ff16 1px, transparent 1px),
-      linear-gradient(#6ed6ff10 1px, transparent 1px),
-      radial-gradient(ellipse at 24% 30%, #2467b844 0%, transparent 38%),
-      radial-gradient(ellipse at 78% 74%, #b86b2440 0%, transparent 36%);
-    background-size:
-      80px 80px,
-      80px 80px,
-      100% 100%,
-      100% 100%;
+    background: var(--app-overlay);
+    background-size: var(--app-overlay-size);
     mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
     pointer-events: none;
   }
@@ -128,21 +312,17 @@ button {
 .panel {
   min-height: 0;
   padding: 12px;
-  background:
-    linear-gradient(180deg, #15233dcc 0%, #0d1325e6 100%);
-  border: 1px solid #426f9d;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
   border-radius: 10px;
-  box-shadow:
-    inset 0 1px 0 #ffffff1c,
-    0 0 0 1px #07101fcc,
-    0 12px 30px #00000055;
+  box-shadow: var(--panel-shadow);
   backdrop-filter: blur(6px);
 
   h2 {
     margin: 0 0 10px;
-    color: #d9f3ff;
+    color: var(--heading-color);
     font-size: 18px;
-    text-shadow: 0 0 8px #6ed6ff55;
+    text-shadow: 0 0 8px var(--accent-glow);
   }
 }
 
@@ -152,7 +332,7 @@ button {
   z-index: 10;
   display: grid;
   place-items: center;
-  background: #020713cc;
+  background: var(--backdrop-bg);
 }
 
 @media (min-width: 901px) and (min-height: 700px) {

@@ -11,6 +11,7 @@ import { RouletteGrid } from './components/RouletteGrid';
 import { ToastNotice } from './components/ToastNotice';
 import { useRoulette } from './hooks/useRoulette';
 import { isLocale, LOCALE_STORAGE_KEY, type Locale, translations } from './i18n';
+import { DEFAULT_THEME, getThemeColor, isTheme, THEME_STORAGE_KEY, type Theme } from './theme';
 import {
   clearTrackingConsent,
   getGoogleTagManagerId,
@@ -63,6 +64,10 @@ const App = () => {
   const [locale, setLocale] = useState<Locale>(() => {
     const storedLocale = window.localStorage.getItem(LOCALE_STORAGE_KEY);
     return isLocale(storedLocale) ? storedLocale : 'ja';
+  });
+  const [theme, setTheme] = useState<Theme>(() => {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return isTheme(storedTheme) ? storedTheme : DEFAULT_THEME;
   });
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [pasteText, setPasteText] = useState<string | null>(null);
@@ -121,6 +126,13 @@ const App = () => {
     document.documentElement.lang = locale;
     document.title = t.appTitle;
   }, [locale, t.appTitle]);
+
+  useEffect(() => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute('content', getThemeColor(theme));
+  }, [theme]);
 
   useEffect(() => {
     if (googleTagManagerId && trackingConsent === 'granted') {
@@ -209,9 +221,11 @@ const App = () => {
     }
 
     window.localStorage.removeItem(LOCALE_STORAGE_KEY);
+    window.localStorage.removeItem(THEME_STORAGE_KEY);
     clearTrackingConsent();
     reset();
     setLocale('ja');
+    setTheme(DEFAULT_THEME);
     setTrackingConsent('unknown');
     setPasteText(null);
     setToastNotice(null);
@@ -248,8 +262,10 @@ const App = () => {
         activeSlotId={activeSlotId}
         isRolling={isRolling}
         locale={locale}
+        theme={theme}
         isEditorVisible={isEditorVisible}
         onLocaleChange={setLocale}
+        onThemeChange={setTheme}
         onOpenHelp={() => setIsHelpOpen(true)}
         onToggleEditor={() => setIsEditorVisible((prev) => !prev)}
         onSlotSelect={handleSlotSelect}

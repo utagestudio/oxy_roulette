@@ -4,18 +4,18 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  color: #9fb7ca;
+  color: var(--footer-text);
   font-size: 11px;
   line-height: 1;
   letter-spacing: 0;
-  text-shadow: 0 0 8px #6ed6ff33;
+  text-shadow: 0 0 8px var(--accent-glow);
 
   a {
-    color: #c7eaff;
+    color: var(--footer-link);
     text-decoration: none;
 
     &:hover {
-      color: #ffffff;
+      color: var(--footer-link-hover);
       text-decoration: underline;
     }
   }

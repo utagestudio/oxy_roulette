@@ -12,25 +12,20 @@
   overflow: hidden;
   isolation: isolate;
   padding: 8px;
-  color: #e7f5ff;
+  color: var(--cell-text);
   font-size: 22px;
   font-weight: 700;
   text-align: center;
   white-space: normal;
   word-break: break-word;
   overflow-wrap: anywhere;
-  text-shadow: 0 1px 2px #020713cc;
-  background:
-    radial-gradient(ellipse at 50% 35%, #213a55 0%, #101d30 70%),
-    linear-gradient(180deg, #0d1829 0%, #142238 100%);
-  border: 1px solid #243851;
-  border-top-color: #111827;
-  border-left-color: #111827;
+  text-shadow: var(--cell-text-shadow);
+  background: var(--cell-bg);
+  border: 1px solid var(--cell-border);
+  border-top-color: var(--cell-border-top);
+  border-left-color: var(--cell-border-left);
   border-radius: 8px;
-  box-shadow:
-    inset 0 3px 8px #000b1888,
-    inset 0 -1px 0 #8ddcff22,
-    inset 0 0 0 1px #00000055;
+  box-shadow: var(--cell-shadow);
 
   &::before,
   &::after {
@@ -42,17 +37,12 @@
   }
 
   &::before {
-    background:
-      linear-gradient(180deg, #0000004d 0%, transparent 34%),
-      radial-gradient(ellipse at 50% 100%, #2eb6ff14 0%, transparent 58%);
+    background: var(--cell-before);
   }
 
   &::after {
     border-radius: inherit;
-    box-shadow:
-      inset 0 2px 0 #030916cc,
-      inset 2px 0 0 #03091699,
-      inset -1px -1px 0 #6f91b01a;
+    box-shadow: var(--cell-after-shadow);
   }
 
   &.empty {
@@ -60,45 +50,26 @@
   }
 
   &.active {
-    color: #ffffff;
-    background:
-      radial-gradient(ellipse at 50% 45%, #39cbe9 0%, #177b96 46%, #143047 76%),
-      linear-gradient(180deg, #082034 0%, #10233a 100%);
-    border-color: #6bdfff;
-    box-shadow:
-      inset 0 3px 8px #00263d88,
-      inset 0 0 20px #b9f8ff33,
-      0 0 0 1px #78e9ff55,
-      0 0 18px #00d4ff73,
-      0 0 34px #7dffb13d;
+    color: var(--cell-active-text);
+    background: var(--cell-active-bg);
+    border-color: var(--cell-active-border);
+    box-shadow: var(--cell-active-shadow);
     animation: roulette-active-pulse 0.55s ease-in-out infinite alternate;
   }
 
   &.won {
-    color: #fff;
-    text-shadow: 0 1px 2px #2f2300;
-    background:
-      radial-gradient(ellipse at 50% 45%, #ffe178 0%, #d9a83d 50%, #9c6b24 82%),
-      linear-gradient(180deg, #6d4a18 0%, #503411 100%);
-    border-color: #ffe68a;
-    box-shadow:
-      inset 0 3px 8px #3c260080,
-      inset 0 0 20px #fff2a633,
-      0 0 0 1px #ffe68a55,
-      0 0 16px #ffe26a66,
-      0 0 30px #d99a3933;
+    color: var(--cell-won-text);
+    text-shadow: var(--cell-won-text-shadow);
+    background: var(--cell-won-bg);
+    border-color: var(--cell-won-border);
+    box-shadow: var(--cell-won-shadow);
 
     &::before {
-      background:
-        linear-gradient(180deg, #6a480f34 0%, transparent 34%),
-        radial-gradient(ellipse at 50% 100%, #ffd45a26 0%, transparent 58%);
+      background: var(--cell-won-before);
     }
 
     &::after {
-      box-shadow:
-        inset 0 2px 0 #412b07cc,
-        inset 2px 0 0 #412b0799,
-        inset -1px -1px 0 #ffe68a2e;
+      box-shadow: var(--cell-won-after-shadow);
     }
   }
 }

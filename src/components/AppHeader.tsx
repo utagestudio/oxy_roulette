@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Locale, Translation } from '../i18n';
+import type { Theme } from '../theme';
 import type { RouletteSlot } from '../types/roulette';
 import '../styles/AppHeader.scss';
 
@@ -8,8 +9,10 @@ interface AppHeaderProps {
   activeSlotId: string;
   isRolling: boolean;
   locale: Locale;
+  theme: Theme;
   isEditorVisible: boolean;
   onLocaleChange: (locale: Locale) => void;
+  onThemeChange: (theme: Theme) => void;
   onOpenHelp: () => void;
   onToggleEditor: () => void;
   onSlotSelect: (id: string) => void;
@@ -18,14 +21,17 @@ interface AppHeaderProps {
 }
 
 const LOCALES: Locale[] = ['ja', 'en'];
+const THEMES: Theme[] = ['light', 'dark'];
 
 export const AppHeader = ({
   slots,
   activeSlotId,
   isRolling,
   locale,
+  theme,
   isEditorVisible,
   onLocaleChange,
+  onThemeChange,
   onOpenHelp,
   onToggleEditor,
   onSlotSelect,
@@ -148,6 +154,34 @@ export const AppHeader = ({
               {nextLocale.toUpperCase()}
             </button>
           ))}
+        </div>
+        <div className="theme-switch" role="group" aria-label={t.theme}>
+          {THEMES.map((nextTheme) => {
+            const label = nextTheme === 'light' ? t.lightTheme : t.darkTheme;
+
+            return (
+              <button
+                key={nextTheme}
+                type="button"
+                className={`theme-button ${theme === nextTheme ? 'active' : ''}`}
+                onClick={() => onThemeChange(nextTheme)}
+                aria-label={label}
+                aria-pressed={theme === nextTheme}
+                title={label}
+              >
+                {nextTheme === 'light' ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M20.4 15.4A8.2 8.2 0 0 1 8.6 3.6 8.7 8.7 0 1 0 20.4 15.4Z" />
+                  </svg>
+                )}
+              </button>
+            );
+          })}
         </div>
         <button
           type="button"
