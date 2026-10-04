@@ -1,4 +1,3 @@
-import { version } from '../../package.json';
 import type { Locale, Translation } from '../i18n';
 import '../styles/AppFooter.scss';
 
@@ -19,7 +18,7 @@ export const AppFooter = ({ t, locale }: AppFooterProps) => (
     <span aria-hidden="true">-</span>
     <span>
       <a
-        href={`https://tally.so/r/${locale === 'ja' ? 'kdVdDR' : 'KYqY78'}?product=${encodeURIComponent('Stellar Picker')}&version=${encodeURIComponent(version)}`}
+        href={`https://tally.so/r/${locale === 'ja' ? 'kdVdDR' : 'KYqY78'}?product=${encodeURIComponent('Stellar Picker')}`}
         target="_blank"
         rel="noreferrer"
       >
