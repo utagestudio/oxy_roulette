@@ -303,7 +303,7 @@ const App = () => {
         )}
       </div>
 
-      <AppFooter t={t} />
+      <AppFooter t={t} locale={locale} />
 
       {toastText && <ToastNotice message={toastText} />}
 

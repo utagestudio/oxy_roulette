@@ -96,6 +96,14 @@ VITE_GTM_ID=GTM-XXXXXXX
 - `public/sitemap.xml`: サイトマップ
 - `public/llms.txt`: AI検索向け概要
 
+## お問い合わせ / Contact
+
+不具合の報告、要望、質問は[お問い合わせフォーム](https://tally.so/r/kdVdDR?product=Stellar%20Picker)から送れます（アカウントの登録は要りません）。
+GitHub のアカウントをお持ちなら、[GitHub Issues](https://github.com/utagestudio/oxy_roulette/issues) も利用できます。
+
+Bug reports, requests, and questions can be sent through the [contact form](https://tally.so/r/KYqY78?product=Stellar%20Picker) (no account required).
+If you have a GitHub account, [GitHub Issues](https://github.com/utagestudio/oxy_roulette/issues) works as well.
+
 ## Project Notes
 
 詳細な仕様や運用ルールは `AGENTS.md` を参照してください。

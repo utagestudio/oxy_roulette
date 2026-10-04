@@ -70,7 +70,9 @@ Stellar Picker の作成
   - copyright として `© 2026 UTAGE.GAMES` を表示する
   - `X` は `https://x.com/utage_studio` にリンクする
   - `YouTube` は `https://youtube.com/c/utagegames/` にリンクする
-  - `バグ報告・機能要望はこちら` / `Report bugs or request features` は `https://github.com/utagestudio/oxy_roulette/issues` にリンクする
+  - 不具合・要望・質問の問い合わせ先は、登録不要のお問い合わせフォームを先に表示し、GitHub Issues (`https://github.com/utagestudio/oxy_roulette/issues`) も併記する
+  - フォームは日本語 `https://tally.so/r/kdVdDR`、英語 `https://tally.so/r/KYqY78` を表示言語に応じて切り替える
+  - フォームURLには `product=Stellar%20Picker` を付け、アプリ内では `package.json` のバージョンを自動取得して `version` に付ける。README など手動更新の文書にはバージョンを付けない
 - デザインは、配信画面で視認しやすい宇宙感のある見た目にする
   - 星層や深い宇宙背景を使う
   - パネルは半透明の宇宙船UI風にする
