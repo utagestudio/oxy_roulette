@@ -71,6 +71,7 @@ Stellar Picker の作成
   - `X` は `https://x.com/utage_studio` にリンクする
   - `YouTube` は `https://youtube.com/c/utagegames/` にリンクする
   - 不具合・要望・質問の問い合わせ先は、登録不要のお問い合わせフォームを先に表示し、GitHub Issues (`https://github.com/utagestudio/oxy_roulette/issues`) も併記する
+  - フッターにはアカウント登録不要の補足文を表示しない
   - フォームは日本語 `https://tally.so/r/kdVdDR`、英語 `https://tally.so/r/KYqY78` を表示言語に応じて切り替える
   - フォームURLには `product=Stellar%20Picker` を付け、アプリ内では `package.json` のバージョンを自動取得して `version` に付ける。README など手動更新の文書にはバージョンを付けない
 - デザインは、配信画面で視認しやすい宇宙感のある見た目にする

@@ -25,7 +25,6 @@ export const AppFooter = ({ t, locale }: AppFooterProps) => (
       >
         {t.contactLink}
       </a>
-      {' '}({t.noAccountRequired})
     </span>
     <a href="https://github.com/utagestudio/oxy_roulette/issues" target="_blank" rel="noreferrer">
       {t.issueLink}
