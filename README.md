@@ -39,9 +39,14 @@ Stellar Picker は、配信や作業の「やることリスト」からラン�
 
 ## Development
 
+Node.js 26系（26.12.1以上）を使用します。開発用のバージョンは `mise.toml` で 26.12.1 に固定しています。[mise](https://mise.jdx.dev/) をインストールしたうえで、次のコマンドを実行してください。
+
 ```bash
-npm install
-npm run dev
+mise install
+mise exec -- node --version
+mise exec -- npm --version
+mise exec -- npm ci
+mise exec -- npm run dev
 ```
 
 `npm run dev` は `0.0.0.0` に bind するため、同一ネットワーク内の他PCやスマートフォンからもアクセスできます。起動時に表示される `Network` URL、または開発機のIPアドレスとポートを使って開いてください。
@@ -49,14 +54,18 @@ npm run dev
 Production build:
 
 ```bash
-npm run build
+mise exec -- npm run build
 ```
 
 Preview built files:
 
 ```bash
-npm run preview
+mise exec -- npm run preview
 ```
+
+ホスティングのビルド環境でも Node.js 26系（26.12.1以上）を指定してください。`mise.toml` が自動で適用されるとは限らないため、ホスティング側の設定でバージョンを指定し、ビルドログの `node --version` / `npm --version` を確認します。インストールは `npm ci`、ビルドは `npm run build`、静的ファイルの公開ディレクトリは `dist` です。
+
+Node.js のセキュリティ更新時は、26系の修正版へ `mise.toml` の固定バージョンと `package.json` / `package-lock.json` の最低バージョンを更新し、`npm ci`、ビルド、主要操作を再確認してください。
 
 ## Environment Variables
 
