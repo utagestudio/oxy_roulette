@@ -63,9 +63,9 @@ Preview built files:
 mise exec -- npm run preview
 ```
 
-ホスティングのビルド環境でも Node.js 26系（26.12.1以上）を指定してください。`mise.toml` が自動で適用されるとは限らないため、ホスティング側の設定でバージョンを指定し、ビルドログの `node --version` / `npm --version` を確認します。インストールは `npm ci`、ビルドは `npm run build`、静的ファイルの公開ディレクトリは `dist` です。
+Cloudflare Pages のビルド用バージョンは、ルートの `.node-version` で 26.12.1 に指定しています。Production / Preview の環境変数に `NODE_VERSION` が設定されている場合は、削除するか `.node-version` と同じ値に揃えてください。再ビルド後は、ビルドログで実際に Node.js 26.12.1 が使われていることを確認します。インストールは `npm ci`、ビルドは `npm run build`、静的ファイルの公開ディレクトリは `dist` です。
 
-Node.js のセキュリティ更新時は、26系の修正版へ `mise.toml` の固定バージョンと `package.json` / `package-lock.json` の最低バージョンを更新し、`npm ci`、ビルド、主要操作を再確認してください。
+Node.js のセキュリティ更新時は、26系の修正版へ `mise.toml` / `.node-version` の固定バージョンと `package.json` / `package-lock.json` の最低バージョンを更新し、`npm ci`、ビルド、主要操作を再確認してください。
 
 ## Environment Variables
 
